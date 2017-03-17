@@ -1,0 +1,349 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Sup Seasonal
+# during dev, should point to your local machine
+host: localhost:10042
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /foods:
+    x-swagger-router-controller: foods
+    get:
+      summary: Gets all foods
+      description: Returns a list of all foods and their seasonal information.
+      operationId: getFoods
+      responses:
+        "200":
+          description: Foods response
+          schema:
+            $ref: "#/definitions/FoodsList"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      summary: Adds a food
+      description: Adds a new food and its seasonal information to the foods list.
+      operationId: addFood
+      parameters:
+        - name: food
+          in: body
+          description: The food to add.
+          required: true
+          schema:
+            $ref: "#/definitions/Food"
+      responses:
+        "200":
+          description: Added food response
+          schema:
+            $ref: "#/definitions/Food"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /foods/{food}:
+    x-swagger-router-controller: foods
+    get:
+      summary: Gets a single food item
+      description: Returns all seasonal information about a given food.
+      operationId: getFood
+      parameters:
+        - name: food
+          in: path
+          description: Name of food
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Food response
+          schema:
+            $ref: "#/definitions/Food"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      summary: Update a single food item
+      description: Updates the seasonal information about a given food item.
+      operationId: updateFood
+      parameters:
+        - name: food
+          in: path
+          description: Name of food
+          required: true
+          type: string
+        - name: food
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Food"
+      responses:
+        "200":
+          description: Updated food response
+          schema:
+            $ref: "#/definitions/Food"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      summary: Removes a food
+      description: Removes a food from the foods list.
+      operationId: deleteFood
+      parameters:
+        - name: food
+          in: path
+          description: The food to delete
+          required: true
+          type: string
+      responses:
+        "204":
+          description: Food deleted
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /months/{month}:
+    x-swagger-router-controller: months
+    get:
+      summary: Gets all foods for a given month
+      description: Returns a list of all foods and their seasonal information for a specific month.
+      operationId: getMonth
+      parameters:
+        - name: month
+          in: path
+          description: Month of the year
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Foods response
+          schema:
+            $ref: "#/definitions/FoodsList"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /months/{month}/recipes:
+    x-swagger-router-controller: months
+    get:
+      summary: Gets recipes using seasonal ingredients for a given month
+      description: Returns a list of recipes and their seasonal information for a specific month.
+      operationId: getRecipes
+      parameters:
+        - name: month
+          in: path
+          description: Month of the year
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Recipes response
+          schema:
+            $ref: "#/definitions/RecipeList"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users:
+    get:
+      summary: Gets all users
+      description: Returns a list of all users and their information.
+      operationId: getUsers
+      responses:
+        "200":
+          description: Users response
+          schema:
+            $ref: "#/definitions/RecipeList"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  FoodsList: 
+    required:
+      - foods
+    properties:
+      foods:
+        type: array
+        items:
+          $ref: "#/definitions/Food"
+  Food:
+    required:
+      - id
+      - food_name
+      - created_by
+      - created_at
+      - updated_at
+      - jan
+      - feb
+      - mar
+      - apr
+      - may
+      - jun
+      - jul
+      - aug
+      - sep
+      - oct
+      - nov
+      - dec
+    properties:
+      id:
+        type: integer
+      food_name:
+        type: string
+      created_by:
+        type: string
+      created_at:
+        type: string
+      updated_at:
+        type: string
+      jan:
+        type: boolean
+        default: false
+      feb:
+        type: boolean
+        default: false
+      mar:
+        type: boolean
+        default: false
+      apr:
+        type: boolean
+        default: false
+      may:
+        type: boolean
+        default: false
+      jun:
+        type: boolean
+        default: false
+      jul:
+        type: boolean
+        default: false
+      aug:
+        type: boolean
+        default: false
+      sep:
+        type: boolean
+        default: false
+      oct:
+        type: boolean
+        default: false
+      nov:
+        type: boolean
+        default: false
+      dec:
+        type: boolean
+        default: false
+  RecipeList: 
+    required:
+      - recipes
+    properties:
+      recipes:
+        type: array
+        items:
+          $ref: "#/definitions/Recipe"
+  Recipe:
+    required:
+      - id 
+      - title
+      - image
+      - imageType
+      - usedIngredientCount
+      - missedIngredientCount
+      - likes
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      image:
+        type: string
+      imageType:
+        type: string
+      usedIngredientCount:
+        type: integer
+      missedIngredientCount:
+        type: integer
+      likes:
+        type: integer
+  FavoriteList: 
+    required:
+      - favorites
+    properties:
+      favorites:
+        type: array
+        items:
+          $ref: "#/definitions/Favorite"
+  Favorite:
+    required:
+      - id 
+      - user_id
+      - recipe_id
+      - month
+      - created_at
+      - updated_at
+    properties:
+      id:
+        type: integer
+      user_id:
+        type: integer
+      recipe_id:
+        type: integer
+      month:
+        type: string
+      created_at:
+        type: string
+      updated_at:
+        type: string
+  UserList:
+    required:
+      - users
+    properties:
+      users:
+        type: array
+        items:
+          $ref: "#/definitions/User"
+  User:
+    required:
+      - id
+      - username
+      - email
+      - permissions
+      - hashed_password
+      - created_at
+      - updated_at
+    properties:
+      id:
+        type: integer
+      username:
+        type: string
+      email:
+        type: string
+      permissions:
+        type: string
+      hashed_password:
+        type: string
+      created_at:
+        type: string
+      updated_at:
+        type: string
+        
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
