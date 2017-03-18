@@ -478,6 +478,7 @@ definitions:
     properties:
       id:
         type: integer
+        description: This is the id of the user
       username:
         type: string
       email:
