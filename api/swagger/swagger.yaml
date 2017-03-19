@@ -19,9 +19,11 @@ paths:
   /foods:
     x-swagger-router-controller: foods
     get:
+      consumes:
+        - application/json
       summary: Gets all foods
       description: Returns a list of all foods and their seasonal information.
-      operationId: getFoods
+      operationId: getAllFoods
       responses:
         "200":
           description: Foods response
@@ -32,6 +34,8 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
+      consumes:
+        - application/json
       summary: Adds a food
       description: Adds a new food and its seasonal information to the foods list.
       operationId: addFood
@@ -51,16 +55,16 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /foods/{food}:
+  /foods/{food_id}:
     x-swagger-router-controller: foods
     get:
       summary: Gets a single food item
       description: Returns all seasonal information about a given food.
       operationId: getFood
       parameters:
-        - name: food
+        - name: food_id
           in: path
-          description: Name of food
+          description: ID of food to get
           required: true
           type: string
       responses:
@@ -77,9 +81,9 @@ paths:
       description: Updates the seasonal information about a given food item.
       operationId: updateFood
       parameters:
-        - name: food
+        - name: food_id
           in: path
-          description: Name of food
+          description: ID of food to update
           required: true
           type: string
         - name: food
@@ -101,9 +105,9 @@ paths:
       description: Removes a food from the foods list.
       operationId: deleteFood
       parameters:
-        - name: food
+        - name: food_id
           in: path
-          description: The food to delete
+          description: ID of food to delete
           required: true
           type: string
       responses:
@@ -155,23 +159,165 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /months/{month}/favorites:
+    x-swagger-router-controller: favorites
+    get:
+      summary: Gets favorited recipes by month
+      description: Returns a list of all favorited recipes for ingredients from a specific month.
+      operationId: getFavoritesByMonth
+      parameters:
+        - name: month
+          in: path
+          description: Month of the year
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Favorites by month response
+          schema:
+            $ref: "#/definitions/FavoritesByMonthList"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /users:
+    x-swagger-router-controller: users
     get:
       summary: Gets all users
       description: Returns a list of all users and their information.
-      operationId: getUsers
+      operationId: getAllUsers
       responses:
         "200":
           description: Users response
           schema:
-            $ref: "#/definitions/RecipeList"
+            $ref: "#/definitions/UsersList"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      summary: Add a user
+      description: Adds a new user to the users list.
+      operationId: addUser
+      parameters:
+        - name: user
+          in: body
+          description: The user to add.
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: Added user response
+          schema:
+            $ref: "#/definitions/User"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/{id}:
+    x-swagger-router-controller: users
+    get:
+      summary: Gets a user
+      description: Returns a single user.
+      produces:
+       - application/json
+      operationId: getUser
+      parameters:
+        - name: id
+          in: path
+          description: User's ID
+          required: true
+          type: integer
+      responses:
+        "200":
+          description: User response
+          schema:
+            $ref: "#/definitions/User"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      summary: Update a single user
+      description: Updates a user's information.
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          description: User's ID
+          required: true
+          type: integer
+        - name: user
+          in: body
+          description: The user to update.
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: Updated user response
+          schema:
+            $ref: "#/definitions/User"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      summary: Removes a user
+      description: Removes a user from the users list.
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          description: User's ID
+          required: true
+          type: integer
+      responses:
+        "204":
+          description: User deleted
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /favorites:
+    x-swagger-router-controller: favorites
+    get:
+      summary: Gets all favorited recipes
+      description: Returns a list of all of a user's favorited recipes.
+      operationId: getFavorites
+      responses:
+        "200":
+          description: Favorites response
+          schema:
+            $ref: "#/definitions/FavoritesList"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /favorites/{recipe_id}:
+    x-swagger-router-controller: favorites
+    get:
+      summary: Gets favorited recipe
+      description: Returns a single recipe saved to a users favorites.
+      operationId: getFavRecipeById
+      parameters:
+        - name: recipe_id
+          in: path
+          description: ID of favorited recipe
+          required: true
+          type: integer
+      responses:
+        "200":
+          description: Favorite recipe by ID response
+          schema:
+            $ref: "#/definitions/Favorite"
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
-# complex objects have schema definitions
 definitions:
   FoodsList: 
     required:
@@ -279,7 +425,15 @@ definitions:
         type: integer
       likes:
         type: integer
-  FavoriteList: 
+  FavoritesList: 
+    required:
+      - favorites
+    properties:
+      favorites:
+        type: array
+        items:
+          $ref: "#/definitions/Favorite"
+  FavoritesByMonthList: 
     required:
       - favorites
     properties:
@@ -308,7 +462,7 @@ definitions:
         type: string
       updated_at:
         type: string
-  UserList:
+  UsersList:
     required:
       - users
     properties:
