@@ -4,9 +4,9 @@ info:
   title: Sup Seasonal
 # during dev, should point to your local machine
 host: localhost:10042
-# basePath prefixes all resource paths 
+# basePath prefixes all resource paths
 basePath: /
-# 
+#
 schemes:
   # tip: remove http to make production-grade
   - http
@@ -66,7 +66,7 @@ paths:
           in: path
           description: ID of food to get
           required: true
-          type: string
+          type: integer
       responses:
         "200":
           description: Food response
@@ -85,7 +85,7 @@ paths:
           in: path
           description: ID of food to update
           required: true
-          type: string
+          type: integer
         - name: food
           in: body
           required: true
@@ -109,7 +109,7 @@ paths:
           in: path
           description: ID of food to delete
           required: true
-          type: string
+          type: integer
       responses:
         "204":
           description: Food deleted
@@ -319,7 +319,7 @@ paths:
   /swagger:
     x-swagger-pipe: swagger_raw
 definitions:
-  FoodsList: 
+  FoodsList:
     required:
       - foods
     properties:
@@ -393,7 +393,7 @@ definitions:
       dec:
         type: boolean
         default: false
-  RecipeList: 
+  RecipeList:
     required:
       - recipes
     properties:
@@ -403,7 +403,7 @@ definitions:
           $ref: "#/definitions/Recipe"
   Recipe:
     required:
-      - id 
+      - id
       - title
       - image
       - imageType
@@ -425,7 +425,7 @@ definitions:
         type: integer
       likes:
         type: integer
-  FavoritesList: 
+  FavoritesList:
     required:
       - favorites
     properties:
@@ -433,7 +433,7 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/Favorite"
-  FavoritesByMonthList: 
+  FavoritesByMonthList:
     required:
       - favorites
     properties:
@@ -443,7 +443,7 @@ definitions:
           $ref: "#/definitions/Favorite"
   Favorite:
     required:
-      - id 
+      - id
       - user_id
       - recipe_id
       - month
@@ -494,7 +494,7 @@ definitions:
         type: string
       updated_at:
         type: string
-        
+
   ErrorResponse:
     required:
       - message
