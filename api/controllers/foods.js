@@ -99,9 +99,35 @@ function updateFood(req, res) {
 		})
 }
 
+function deleteFood(req, res) {
+	let knex = require('../../knex.js');
+	let paramId = req.swagger.params.food_id.value;
+	let foodToDelete;
+	knex('foods')
+		.where('id', paramId)
+		.then((foods) => {
+			foodToDelete = foods;
+		})
+		.then(() => {
+			return knex('foods')
+			.del()
+			.where('id', paramId)
+		})
+		.then(() => {
+			res.send(foodToDelete)
+		})
+		.catch((err) => {
+			console.error(err);
+		})
+		.finally(() => {
+			// knex.destroy();
+		})
+}
+
 module.exports = {
   getAllFoods: getAllFoods,
   getFood: getFood,
 	addFood: addFood,
-	updateFood: updateFood
+	updateFood: updateFood,
+	deleteFood: deleteFood
 }
