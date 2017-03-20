@@ -78,9 +78,27 @@ function updateUser(req, res) {
     })
 }
 
+function deleteUser(req, res) {
+	let knex = require('../../knex.js');
+  let paramId = req.swagger.params.user_id.value;
+  knex('users')
+		.del()
+		.where('id', paramId)
+  		.then((user) => {
+  			res.send(user[0]);
+  		})
+  		.catch((err) => {
+  			console.error(err);
+  		})
+  		.finally(() => {
+  			// knex.destroy();
+  		});
+}
+
 module.exports = {
   getAllUsers: getAllUsers,
   getUser:  getUser,
   addUser:  addUser,
-  updateUser: updateUser
+  updateUser: updateUser,
+  deleteUser: deleteUser
 }
