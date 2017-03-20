@@ -15,7 +15,7 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .defaultTo('');
 
-    table.specificType('hashed_password', 'char(60)')
+    table.specificType('hashed_password', 'char(14)')
       .notNullable();
 
     table.timestamps(true, true);

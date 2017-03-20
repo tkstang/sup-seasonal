@@ -411,6 +411,7 @@ definitions:
         type: string
       permissions:
         type: string
+        default: 'user'
       hashed_password:
         type: string
   ErrorResponse:
