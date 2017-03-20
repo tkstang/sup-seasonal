@@ -12,50 +12,73 @@ const bodyParser = require('body-parser');
 // app.use(bodyParser.json());
 
 beforeEach(done => {
-  // Promise.all([
-  //   knex('foods').insert([{
-	// 		food_name: 'tulips',
-	// 		created_by: 1,
-	// 		mar: true,
-	// 		apr: true,
-	// 		may: true,
-	// 		jun: true,
-	// 		sep: true,
-	// 		oct: true,
-	// 		nov: true,
-	// 		dec: true
-	//    },
-  //    {
-  //   food_name: 'roses',
-  //   created_by: 1,
-  //   mar: true,
-  //   apr: true,
-  //   may: true,
-  //   jun: true,
-  //   sep: true,
-  //   oct: true,
-  //   nov: true,
-  //   dec: true
-  //   },
-  //   {
-  //   food_name: 'daisies',
-  //   created_by: 1,
-  //   mar: true,
-  //   apr: true,
-  //   may: true,
-  //   jun: true,
-  //   sep: true,
-  //   oct: true,
-  //   nov: true,
-  //   dec: true
-  //   }
-  //   ])
-  // ])
-
-  console.log('test');
   knex.migrate.latest()
+  .then(() => {
+    Promise.all([
+      knex('users').insert({
+  			id:	1,
+  			username: 'juicedonjuice',
+  			email:	'juiced@gmail.com',
+  			permissions: 'user',
+  			hashed_password: 'blah',
+  			created_at:	'2017-03-19 18:22:58.526251-07',
+  			updated_at:	'2017-03-19 18:22:58.526251-07'
+  		})
+    ])
 
+  })
+  .then(() => {
+    Promise.all([
+      knex('foods').insert([{
+  			food_name: 'tulips',
+  			created_by: 1,
+        created_at: "2017-03-19T22:30:11.400Z",
+        updated_at: "2017-03-19T22:30:11.400Z",
+        id: 1,
+  			mar: true,
+  			apr: true,
+  			may: true,
+  			jun: true,
+  			sep: true,
+  			oct: true,
+  			nov: true,
+  			dec: true
+  	   },
+       {
+      food_name: 'roses',
+      created_by: 1,
+      created_at: "2017-03-19T22:30:11.400Z",
+      updated_at: "2017-03-19T22:30:11.400Z",
+      id: 2,
+      mar: true,
+      apr: true,
+      may: true,
+      jun: true,
+      sep: true,
+      oct: true,
+      nov: true,
+      dec: true
+      },
+      {
+      food_name: 'daisies',
+      created_by: 1,
+      created_at: "2017-03-19T22:30:11.400Z",
+      updated_at: "2017-03-19T22:30:11.400Z",
+      id: 3,
+      mar: true,
+      apr: true,
+      may: true,
+      jun: true,
+      sep: true,
+      oct: true,
+      nov: true,
+      dec: true
+      }
+      ])
+    ])
+  })
 
+  .then(() => knex.raw(`SELECT setval('users_id_seq', (SELECT MAX(id) FROM users))`))
 	.then(() => done())
 	.catch((err) => {
 		done(err);
@@ -63,12 +86,7 @@ beforeEach(done => {
 });
 
 afterEach(done => {
-	knex('foods')
-	.del()
-	// .then(() => knex.destroy())
-  .then(() => {
-    knex.migrate.rollback();
-  })
+	knex.migrate.rollback()
 	.then(() => done())
 	.catch((err) => {
 		done(err);
@@ -92,47 +110,61 @@ describe('GET /foods', () => {
       .get('/foods')
       .expect(200,[
         {
-        food_name: 'daisies',
-        created_by: 1,
-        jan: false,
-        feb: false,
-        mar: true,
-        apr: true,
-        may: true,
-        jun: true,
-        jul: false,
-        aug: false,
-        sep: true,
-        oct: true,
-        nov: true,
-        dec: true,
-        created_at: "2017-03-19T22:30:11.400Z",
-        updated_at: "2017-03-19T22:30:11.400Z",
-        id: 186
+          food_name: 'daisies',
+          created_by: 1,
+          created_at: "2017-03-19T22:30:11.400Z",
+          updated_at: "2017-03-19T22:30:11.400Z",
+          id: 3,
+          jan: false,
+          feb: false,
+          mar: true,
+          apr: true,
+          may: true,
+          jun: true,
+          jul: false,
+          aug: false,
+          sep: true,
+          oct: true,
+          nov: true,
+          dec: true
         },
         {
-       food_name: 'roses',
-       created_by: 1,
-       mar: true,
-       apr: true,
-       may: true,
-       jun: true,
-       sep: true,
-       oct: true,
-       nov: true,
-       dec: true
+          food_name: 'roses',
+          created_by: 1,
+          created_at: "2017-03-19T22:30:11.400Z",
+          updated_at: "2017-03-19T22:30:11.400Z",
+          id: 2,
+          jan: false,
+          feb: false,
+          mar: true,
+          apr: true,
+          may: true,
+          jun: true,
+          jul: false,
+          aug: false,
+          sep: true,
+          oct: true,
+          nov: true,
+          dec: true
        },
        {
-   			food_name: 'tulips',
-   			created_by: 1,
-   			mar: true,
-   			apr: true,
-   			may: true,
-   			jun: true,
-   			sep: true,
-   			oct: true,
-   			nov: true,
-   			dec: true
+         food_name: 'tulips',
+   			 created_by: 1,
+         created_at: "2017-03-19T22:30:11.400Z",
+         updated_at: "2017-03-19T22:30:11.400Z",
+         id: 1,
+         jan: false,
+         feb: false,
+   			 mar: true,
+   			 apr: true,
+   			 may: true,
+   		 	 jun: true,
+         jul: false,
+         aug: false,
+   			 sep: true,
+   			 oct: true,
+   			 nov: true,
+   			 dec: true
    	   }
       ], done);
   });
