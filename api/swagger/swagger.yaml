@@ -215,7 +215,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /users/{id}:
+  /users/{user_id}:
     x-swagger-router-controller: users
     get:
       summary: Gets a user
@@ -224,7 +224,7 @@ paths:
        - application/json
       operationId: getUser
       parameters:
-        - name: id
+        - name: user_id
           in: path
           description: User's ID
           required: true
@@ -243,7 +243,7 @@ paths:
       description: Updates a user's information.
       operationId: updateUser
       parameters:
-        - name: id
+        - name: user_id
           in: path
           description: User's ID
           required: true
@@ -268,7 +268,7 @@ paths:
       description: Removes a user from the users list.
       operationId: deleteUser
       parameters:
-        - name: id
+        - name: user_id
           in: path
           description: User's ID
           required: true
@@ -343,7 +343,6 @@ definitions:
           $ref: "#/definitions/Recipe"
   Recipe:
     required:
-      - id
       - title
       - image
       - imageType
@@ -351,8 +350,6 @@ definitions:
       - missedIngredientCount
       - likes
     properties:
-      id:
-        type: integer
       title:
         type: string
       image:
@@ -383,24 +380,15 @@ definitions:
           $ref: "#/definitions/Favorite"
   Favorite:
     required:
-      - id
       - user_id
       - recipe_id
       - month
-      - created_at
-      - updated_at
     properties:
-      id:
-        type: integer
       user_id:
         type: integer
       recipe_id:
         type: integer
       month:
-        type: string
-      created_at:
-        type: string
-      updated_at:
         type: string
   UsersList:
     required:
@@ -412,16 +400,11 @@ definitions:
           $ref: "#/definitions/User"
   User:
     required:
-      - id
       - username
       - email
       - permissions
       - hashed_password
-      - created_at
-      - updated_at
     properties:
-      id:
-        type: integer
       username:
         type: string
       email:
@@ -430,11 +413,6 @@ definitions:
         type: string
       hashed_password:
         type: string
-      created_at:
-        type: string
-      updated_at:
-        type: string
-
   ErrorResponse:
     required:
       - message
