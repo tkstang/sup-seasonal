@@ -329,70 +329,10 @@ definitions:
           $ref: "#/definitions/Food"
   Food:
     required:
-      - id
       - food_name
-      - created_by
-      - created_at
-      - updated_at
-      - jan
-      - feb
-      - mar
-      - apr
-      - may
-      - jun
-      - jul
-      - aug
-      - sep
-      - oct
-      - nov
-      - dec
     properties:
-      id:
-        type: integer
       food_name:
         type: string
-      created_by:
-        type: string
-      created_at:
-        type: string
-      updated_at:
-        type: string
-      jan:
-        type: boolean
-        default: false
-      feb:
-        type: boolean
-        default: false
-      mar:
-        type: boolean
-        default: false
-      apr:
-        type: boolean
-        default: false
-      may:
-        type: boolean
-        default: false
-      jun:
-        type: boolean
-        default: false
-      jul:
-        type: boolean
-        default: false
-      aug:
-        type: boolean
-        default: false
-      sep:
-        type: boolean
-        default: false
-      oct:
-        type: boolean
-        default: false
-      nov:
-        type: boolean
-        default: false
-      dec:
-        type: boolean
-        default: false
   RecipeList:
     required:
       - recipes
