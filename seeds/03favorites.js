@@ -21,7 +21,7 @@ exports.seed = function(knex, Promise) {
         }
       ])
         .then(() =>{
-          return knex.raw("SELECT setval('foods_id_seq', (SELECT MAX(id) FROM foods));");
+          return knex.raw("SELECT setval('favorites_id_seq', (SELECT MAX(id) FROM favorites));");
         });
     });
 };

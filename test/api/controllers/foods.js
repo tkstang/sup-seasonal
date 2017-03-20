@@ -78,7 +78,7 @@ beforeEach(done => {
     ])
   })
 
-  .then(() => knex.raw(`SELECT setval('users_id_seq', (SELECT MAX(id) FROM users))`))
+  .then(() => knex.raw(`SELECT setval('foods_id_seq', (SELECT MAX(id) FROM foods))`))
 	.then(() => done())
 	.catch((err) => {
 		done(err);
@@ -98,7 +98,7 @@ after(() => {
 })
 
 
-xdescribe('GET /foods', () => {
+describe('GET /foods', () => {
   it('responds with JSON', done => {
     request(app)
       .get('/foods')
@@ -202,7 +202,7 @@ xdescribe('GET /foods:id', () => {
   });
 });
 
-describe('POST /foods', () => {
+xdescribe('POST /foods', () => {
   const newFood = {
     food_name: 'sunflowers',
     created_by: 1,
