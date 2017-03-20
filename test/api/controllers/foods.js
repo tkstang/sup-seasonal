@@ -177,4 +177,27 @@ describe('GET /foods:id', () => {
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
+  it('returns food corresponding to ID param', () => {
+    request(app)
+      .get('/foods/2')
+      .expect(200, {
+        food_name: 'roses',
+        created_by: 1,
+        created_at: "2017-03-19T22:30:11.400Z",
+        updated_at: "2017-03-19T22:30:11.400Z",
+        id: 2,
+        jan: false,
+        feb: false,
+        mar: true,
+        apr: true,
+        may: true,
+        jun: true,
+        jul: false,
+        aug: false,
+        sep: true,
+        oct: true,
+        nov: true,
+        dec: true
+     })
+  });
 });
