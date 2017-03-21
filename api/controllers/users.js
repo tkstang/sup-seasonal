@@ -1,6 +1,9 @@
 'use strict';
 
-function getAllUsers(req, res) {
+const ev = require('express-validation');
+const validations = require('../../validations/users.js');
+
+function getAllUsers(req, res, next) {
 	let knex = require('../../knex.js');
 	knex('users')
     .orderBy('id')
@@ -32,6 +35,8 @@ function getUser(req, res) {
 }
 
 function addUser(req, res) {
+  console.log('hi');
+	ev(validations.post);
 	let knex = require('../../knex.js');
 	knex('users')
 		.insert({
