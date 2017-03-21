@@ -55,7 +55,19 @@ beforeEach(done => {
     ])
   })
 
-  .then(() => knex.raw(`SELECT setval('favorites_id_seq', (SELECT MAX(id) FROM favorites))`))
+
+
+  // .then(() => knex.raw(`SELECT setval('favorites_id_seq', (SELECT MAX(id) FROM favorites))`))
+  .then(() => {
+          knex.raw("SELECT setval('favorites_id_seq', (SELECT MAX(id) FROM favorites));");
+        })
+  .then(() =>{
+    knex('favorites_id_seq')
+      .then((res) => {
+        console.log(res)
+      })
+  })
+
   .then(() => done())
   .catch((err) => {
     done(err);
@@ -113,7 +125,7 @@ describe('GET /favorites', () => {
   });
 });
 
-describe('GET /foods:id', () => {
+describe('GET /favorites:id', () => {
   it('responds with JSON', done => {
     request(app)
     .get('/favorites/2')
@@ -131,5 +143,24 @@ describe('GET /foods:id', () => {
       updated_at: "2017-03-19T22:30:11.400Z",
       id: 2
     })
+  });
+});
+
+describe('POST /favorites', () => {
+  const newFave = {
+    user_id: 1,
+    recipe_id: 98765,
+    month: 'mar',
+    created_at: "2017-03-19T22:30:11.400Z",
+    updated_at: "2017-03-19T22:30:11.400Z",
+    id: 4
+  };
+
+  it('responds with JSON', done => {
+    request(app)
+      .post('/favorites')
+      .send(newFave)
+      .expect('Content-Type', /json/)
+      .expect(200, done);
   });
 });
