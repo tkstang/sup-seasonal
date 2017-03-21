@@ -8,7 +8,6 @@ const app = require('../../../app');
 let knex = require('../../../knex');
 
 const bodyParser = require('body-parser');
-
 app.use(bodyParser.json());
 
 beforeEach(done => {
@@ -229,12 +228,10 @@ describe('POST /foods', () => {
   it('stores the passed obj into the db', done => {
     request(app)
       .post('foods')
-      // .type('form')
       .send(newFood)
-      .set('Accept', 'application/json')
       .end((err, res) => {
-        console.log(res);
-        expect(res.body).to.deep.equal([
+        console.log(res.body);
+        expect(res.body).to.deep.equal(
           {
             food_name: 'sunflowers',
             created_by: 1,
@@ -254,7 +251,7 @@ describe('POST /foods', () => {
             nov: "true",
             dec: "true"
           }
-        ])
+        )
         done();
       });
   });

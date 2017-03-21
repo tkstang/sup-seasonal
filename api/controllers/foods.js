@@ -12,7 +12,7 @@ function getAllFoods(req, res) {
   })
 	.finally(() => {
 		// knex.destroy();
-	})
+	});
 }
 
 function getFood(req, res) {

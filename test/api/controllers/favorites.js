@@ -141,12 +141,12 @@ describe('GET /favorites:id', () => {
 
 describe('POST /favorites', () => {
   const newFave = {
+    created_at: '2017-03-11T22:30:11.400Z',
+    updated_at: "2017-03-11T22:30:11.400Z",
     user_id: 1,
     recipe_id: 98765,
-    month: 'mar',
-    created_at: "2017-03-19T22:30:11.400Z",
-    updated_at: "2017-03-19T22:30:11.400Z"
-    // id: 4
+    month: 'mar'
+    // id: 7
   };
 
   it('responds with JSON', done => {
@@ -155,5 +155,25 @@ describe('POST /favorites', () => {
       .send(newFave)
       .expect('Content-Type', /json/)
       .expect(200, done);
+  });
+  it('stores the passed obj into the db', done => {
+    request(app)
+    .post('/favorites')
+    .send(newFave)
+    .end((err, res) => {
+      console.log(newFave);
+//deleting timestamps
+      delete res.body.created_at;
+      delete res.body.updated_at;
+      expect(res.body).to.deep.equal(
+        {
+          user_id: 1,
+          recipe_id: 98765,
+          month: 'mar',
+          id: 4
+        }
+      )
+      done();
+    });
   });
 });
