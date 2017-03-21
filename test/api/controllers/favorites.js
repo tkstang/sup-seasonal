@@ -146,7 +146,6 @@ describe('POST /favorites', () => {
     user_id: 1,
     recipe_id: 98765,
     month: 'mar'
-    // id: 7
   };
 
   it('responds with JSON', done => {
@@ -158,22 +157,22 @@ describe('POST /favorites', () => {
   });
   it('stores the passed obj into the db', done => {
     request(app)
-    .post('/favorites')
-    .send(newFave)
-    .end((err, res) => {
-      console.log(newFave);
-//deleting timestamps
-      delete res.body.created_at;
-      delete res.body.updated_at;
-      expect(res.body).to.deep.equal(
-        {
-          user_id: 1,
-          recipe_id: 98765,
-          month: 'mar',
-          id: 4
-        }
-      )
-      done();
-    });
+      .post('/favorites')
+      .send(newFave)
+      .end((err, res) => {
+        console.log(newFave);
+  //deleting timestamps
+        delete res.body.created_at;
+        delete res.body.updated_at;
+        expect(res.body).to.deep.equal(
+          {
+            user_id: 1,
+            recipe_id: 98765,
+            month: 'mar',
+            id: 4
+          }
+        )
+        done();
+      });
   });
 });

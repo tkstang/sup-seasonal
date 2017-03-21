@@ -204,18 +204,14 @@ describe('GET /foods:id', () => {
 describe('POST /foods', () => {
   const newFood = {
     food_name: 'sunflowers',
-    created_by: 1,
-    created_at: "2017-03-19T22:30:11.400Z",
-    updated_at: "2017-03-19T22:30:11.400Z",
-    // id: 4,
-    mar: "true",
-    apr: "true",
-    may: "true",
-    jun: "true",
-    sep: "true",
-    oct: "true",
-    nov: "true",
-    dec: "true"
+    mar: true,
+    apr: true,
+    may: true,
+    jun: true,
+    sep: true,
+    oct: true,
+    nov: true,
+    dec: true
   };
 
   it('responds with JSON', done => {
@@ -227,29 +223,29 @@ describe('POST /foods', () => {
   });
   it('stores the passed obj into the db', done => {
     request(app)
-      .post('foods')
+      .post('/foods')
       .send(newFood)
       .end((err, res) => {
-        console.log(res.body);
+//deleting timestamps
+        delete res.body.created_at;
+        delete res.body.updated_at;
         expect(res.body).to.deep.equal(
           {
             food_name: 'sunflowers',
             created_by: 1,
-            created_at: "2017-03-19T22:30:11.400Z",
-            updated_at: "2017-03-19T22:30:11.400Z",
             id: 4,
-            jan: "false",
-            feb: "false",
-            mar: "true",
-            apr: "true",
-            may: "true",
-            jun: "true",
-            jul: "false",
-            aug: "false",
-            sep: "true",
-            oct: "true",
-            nov: "true",
-            dec: "true"
+            jan: false,
+            feb: false,
+            mar: true,
+            apr: true,
+            may: true,
+            jun: true,
+            jul: false,
+            aug: false,
+            sep: true,
+            oct: true,
+            nov: true,
+            dec: true
           }
         )
         done();
