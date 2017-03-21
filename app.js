@@ -47,6 +47,11 @@ app.post('/users', usersValMiddleware, function(err, req, res, next) {
   if (err instanceof ev.ValidationError) return res.status(err.status).json(isolateErrMessage(err));
 });
 
+app.put('/users', usersValMiddleware, function(err, req, res, next) {
+  if (err instanceof ev.ValidationError) return res.status(err.status).json(isolateErrMessage(err));
+});
+
+
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
 
