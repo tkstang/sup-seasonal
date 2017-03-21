@@ -35,8 +35,16 @@ const usersPost = {
 
 const usersValMiddleware = ev(usersPost);
 
+function isolateErrMessage(err){
+  let errObject = err.errors[0];
+  let field = errObject.field;
+  let message = errObject.messages[0].split(`\" `)[1];
+  let errMessage = `${field}: ${message}`;
+  return errMessage;
+}
+
 app.post('/users', usersValMiddleware, function(err, req, res, next) {
-  if (err instanceof ev.ValidationError) return res.status(err.status).json(err.errors[0].messages[0]);
+  if (err instanceof ev.ValidationError) return res.status(err.status).json(isolateErrMessage(err));
 });
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
