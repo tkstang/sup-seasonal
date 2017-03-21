@@ -120,4 +120,16 @@ describe('GET /foods:id', () => {
     .expect('Content-Type', /json/)
     .expect(200, done);
   });
+  it('returns fave corresponding to ID param', () => {
+    request(app)
+    .get('/favorites/2')
+    .expect(200, {
+      user_id: 1,
+      recipe_id: 54321,
+      month: 'feb',
+      created_at: "2017-03-19T22:30:11.400Z",
+      updated_at: "2017-03-19T22:30:11.400Z",
+      id: 2
+    })
+  });
 });
