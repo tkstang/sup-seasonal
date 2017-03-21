@@ -313,6 +313,10 @@ paths:
           description: Added favorite response
           schema:
             $ref: "#/definitions/Favorite"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /favorites/{fave_id}:
     x-swagger-router-controller: favorites
     get:
@@ -347,6 +351,50 @@ paths:
       responses:
         "204":
           description: Favorite deleted
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /login:
+    x-swagger-router-controller: login
+    post:
+      summary: User login
+      description: User provides credentials for log in.
+      operationId: userLogin
+      parameters:
+        - name: credentials
+          in: body
+          description: The users credentials for log in.
+          required: true
+          schema:
+            $ref: "#/definitions/Credentials"
+      responses:
+        "200":
+          description: Authenticated user response
+          schema:
+            $ref: "#/definitions/Authenticated"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /register:
+    x-swagger-router-controller: register
+    post:
+      summary: Account registration
+      description: User provides information to register a new account.
+      operationId: userRegistration
+      parameters:
+        - name: user info
+          in: body
+          description: The users information to register a new account.
+          required: true
+          schema:
+            $ref: "#/definitions/Registration"
+      responses:
+        "200":
+          description: Account registration response
+          schema:
+            $ref: "#/definitions/User"
         default:
           description: Error
           schema:
@@ -446,8 +494,37 @@ definitions:
         type: string
       permissions:
         type: string
-        default: 'user'
       hashed_password:
+        type: string
+  Credentials:
+    required:
+      - email
+      - hashed_password
+    properties:
+      email:
+        type: string
+      hashed_password:
+        type: string
+  Authenticated:
+    required:
+      - email
+      - user_id
+    properties:
+      email:
+        type: string
+      user_id:
+        type: integer
+  Registration:
+    required:
+      - email
+      - hashed_password
+      - username
+    properties:
+      email:
+        type: string
+      hashed_password:
+        type: string
+      username:
         type: string
   ErrorResponse:
     required:
