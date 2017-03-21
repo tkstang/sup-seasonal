@@ -112,3 +112,12 @@ describe('GET /favorites', () => {
       ], done);
   });
 });
+
+describe('GET /foods:id', () => {
+  it('responds with JSON', done => {
+    request(app)
+    .get('/favorites/2')
+    .expect('Content-Type', /json/)
+    .expect(200, done);
+  });
+});
