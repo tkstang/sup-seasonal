@@ -141,12 +141,37 @@ describe('GET /favorites:id', () => {
 
 describe('POST /favorites', () => {
   const newFave = {
-    created_at: '2017-03-11T22:30:11.400Z',
-    updated_at: "2017-03-11T22:30:11.400Z",
     user_id: 1,
     recipe_id: 98765,
     month: 'mar'
   };
+  const noMonth = {
+    user_id: 1,
+    recipe_id: 98765
+  };
+  const noRecipe = {
+    user_id: 1,
+    month: 'mar'
+  }
+  const noUser = {
+    recipe_id: 98765,
+    month: 'mar'
+  }
+  const badRecipe = {
+    user_id: 1,
+    recipe_id: '98765',
+    month: 'mar'
+  }
+  const badMonth = {
+    user_id: 1,
+    recipe_id: 98765,
+    month: 123
+  }
+  const badUser = {
+    user_id: 'joe',
+    recipe_id: 98765,
+    month: 'mar'
+  }
 
   it('responds with JSON', done => {
     request(app)
@@ -174,5 +199,47 @@ describe('POST /favorites', () => {
         )
         done();
       });
+  });
+  it('returns 400 error when req is missing month', done => {
+    request(app)
+    .post('/foods')
+    .send(noMonth)
+    .expect('Content-Type', /json/)
+    .expect(400, done);
+  });
+  it('returns 400 error when req is missing recipe_id', done => {
+    request(app)
+    .post('/foods')
+    .send(noRecipe)
+    .expect('Content-Type', /json/)
+    .expect(400, done);
+  });
+  it('returns 400 error when req is missing user_id', done => {
+    request(app)
+    .post('/foods')
+    .send(noUser)
+    .expect('Content-Type', /json/)
+    .expect(400, done);
+  });
+  it('returns 400 error when recipe_id is not a number', done => {
+    request(app)
+    .post('/foods')
+    .send(badRecipe)
+    .expect('Content-Type', /json/)
+    .expect(400, done);
+  });
+  it('returns 400 error when user_id is not a number', done => {
+    request(app)
+    .post('/foods')
+    .send(badUser)
+    .expect('Content-Type', /json/)
+    .expect(400, done);
+  });
+  it('returns 400 error when month is not a string', done => {
+    request(app)
+    .post('/foods')
+    .send(badMonth)
+    .expect('Content-Type', /json/)
+    .expect(400, done);
   });
 });

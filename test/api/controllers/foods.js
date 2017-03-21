@@ -213,6 +213,16 @@ describe('POST /foods', () => {
     nov: true,
     dec: true
   };
+  const badFood = {
+    mar: true,
+    jan: true,
+    feb: true
+  };
+  const badFoodName = {
+    food_name: true,
+    mar: true,
+    feb: true
+  }
 
   it('responds with JSON', done => {
     request(app)
@@ -250,5 +260,19 @@ describe('POST /foods', () => {
         )
         done();
       });
+  });
+  it('returns 400 error when req is missing food_name', done => {
+    request(app)
+      .post('/foods')
+      .send(badFood)
+      .expect('Content-Type', /json/)
+      .expect(400, done);
+  });
+  it('returns 400 error when food_name is not a string', done => {
+    request(app)
+      .post('/foods')
+      .send(badFoodName)
+      .expect('Content-Type', /json/)
+      .expect(400, done);
   });
 });
