@@ -7,13 +7,16 @@ const expect = require('chai').expect;
 const app = require('../../../app');
 let knex = require('../../../knex');
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+
 
 beforeEach(done => {
   knex.migrate.latest()
   .then(() => {
     Promise.all([
       knex('users').insert({
-  			id:	1,
+  			// id:	1,
   			username: 'juicedonjuice',
   			email:	'juiced@gmail.com',
   			permissions: 'user',
@@ -32,24 +35,24 @@ beforeEach(done => {
           recipe_id: 12345,
           month: 'jan',
           created_at: "2017-03-19T22:30:11.400Z",
-          updated_at: "2017-03-19T22:30:11.400Z",
-          id: 1
+          updated_at: "2017-03-19T22:30:11.400Z"
+          // id: 1
         },
         {
           user_id: 1,
           recipe_id: 54321,
           month: 'feb',
           created_at: "2017-03-19T22:30:11.400Z",
-          updated_at: "2017-03-19T22:30:11.400Z",
-          id: 2
+          updated_at: "2017-03-19T22:30:11.400Z"
+          // id: 2
         },
         {
           user_id: 1,
           recipe_id: 66666,
           month: 'apr',
           created_at: "2017-03-19T22:30:11.400Z",
-          updated_at: "2017-03-19T22:30:11.400Z",
-          id: 3
+          updated_at: "2017-03-19T22:30:11.400Z"
+          // id: 3
         }
       ])
     ])
@@ -57,17 +60,7 @@ beforeEach(done => {
 
 
 
-  // .then(() => knex.raw(`SELECT setval('favorites_id_seq', (SELECT MAX(id) FROM favorites))`))
-  .then(() => {
-          knex.raw("SELECT setval('favorites_id_seq', (SELECT MAX(id) FROM favorites));");
-        })
-  .then(() =>{
-    knex('favorites_id_seq')
-      .then((res) => {
-        console.log(res)
-      })
-  })
-
+  .then(() => knex.raw(`SELECT setval('favorites_id_seq', (SELECT MAX(id) FROM favorites))`))
   .then(() => done())
   .catch((err) => {
     done(err);
@@ -152,8 +145,8 @@ describe('POST /favorites', () => {
     recipe_id: 98765,
     month: 'mar',
     created_at: "2017-03-19T22:30:11.400Z",
-    updated_at: "2017-03-19T22:30:11.400Z",
-    id: 4
+    updated_at: "2017-03-19T22:30:11.400Z"
+    // id: 4
   };
 
   it('responds with JSON', done => {

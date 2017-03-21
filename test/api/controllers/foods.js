@@ -9,14 +9,14 @@ let knex = require('../../../knex');
 
 const bodyParser = require('body-parser');
 
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 beforeEach(done => {
   knex.migrate.latest()
   .then(() => {
     Promise.all([
       knex('users').insert({
-  			id:	1,
+  			// id:	1,
   			username: 'juicedonjuice',
   			email:	'juiced@gmail.com',
   			permissions: 'user',
@@ -34,7 +34,7 @@ beforeEach(done => {
   			created_by: 1,
         created_at: "2017-03-19T22:30:11.400Z",
         updated_at: "2017-03-19T22:30:11.400Z",
-        id: 1,
+        // id: 1,
   			mar: true,
   			apr: true,
   			may: true,
@@ -49,7 +49,7 @@ beforeEach(done => {
       created_by: 1,
       created_at: "2017-03-19T22:30:11.400Z",
       updated_at: "2017-03-19T22:30:11.400Z",
-      id: 2,
+      // id: 2,
       mar: true,
       apr: true,
       may: true,
@@ -64,7 +64,7 @@ beforeEach(done => {
       created_by: 1,
       created_at: "2017-03-19T22:30:11.400Z",
       updated_at: "2017-03-19T22:30:11.400Z",
-      id: 3,
+      // id: 3,
       mar: true,
       apr: true,
       may: true,
@@ -170,7 +170,7 @@ describe('GET /foods', () => {
   });
 });
 
-xdescribe('GET /foods:id', () => {
+describe('GET /foods:id', () => {
   it('responds with JSON', done => {
     request(app)
       .get('/foods/2')
@@ -208,7 +208,7 @@ describe('POST /foods', () => {
     created_by: 1,
     created_at: "2017-03-19T22:30:11.400Z",
     updated_at: "2017-03-19T22:30:11.400Z",
-    id: 4,
+    // id: 4,
     mar: "true",
     apr: "true",
     may: "true",
