@@ -1,8 +1,5 @@
 'use strict';
 
-const ev = require('express-validation');
-const validations = require('../../validations/users.js');
-
 function getAllUsers(req, res, next) {
 	let knex = require('../../knex.js');
 	knex('users')
