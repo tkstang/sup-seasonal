@@ -295,14 +295,32 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /favorites/{recipe_id}:
+    post:
+      consumes:
+        - application/json
+      summary: Adds a favorite
+      description: Adds a favorite and it's info to the list.
+      operationId: addFavorite
+      parameters:
+        - name: favorite
+          in: body
+          description: The recipe to be added to favorites.
+          required: true
+          schema:
+            $ref: "#/definitions/Favorite"
+      responses:
+        "200":
+          description: Added favorite response
+          schema:
+            $ref: "#/definitions/Favorite"
+  /favorites/{fave_id}:
     x-swagger-router-controller: favorites
     get:
       summary: Gets favorited recipe
       description: Returns a single recipe saved to a users favorites.
       operationId: getFavRecipeById
       parameters:
-        - name: recipe_id
+        - name: fave_id
           in: path
           description: ID of favorited recipe
           required: true
@@ -312,6 +330,23 @@ paths:
           description: Favorite recipe by ID response
           schema:
             $ref: "#/definitions/Favorite"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      summary: Removes a favorite
+      description: Removes a favorite from the favorites table by ID.
+      operationId: deleteFavorite
+      parameters:
+        - name: fave_id
+          in: path
+          description: Favorite's ID
+          required: true
+          type: integer
+      responses:
+        "204":
+          description: Favorite deleted
         default:
           description: Error
           schema:
