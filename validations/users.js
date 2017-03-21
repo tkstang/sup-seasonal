@@ -12,9 +12,9 @@ module.exports.post = {
       .max(30)
       .required(),
     permissions: Joi.string()
-      .max(12)
-  }
+      .max(12),
     hashed_password: Joi.string()
       .max(20)
       .required()
+    }
 }
