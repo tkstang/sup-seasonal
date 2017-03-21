@@ -50,8 +50,34 @@ function getFavorite(req, res) {
     })
 }
 
+function deleteFavorite(req, res) {
+  let knex = require('../../knex.js');
+  let paramId = req.swagger.params.fave_id.value;
+  let faveToDelete;
+  knex('favorites')
+    .where('id', paramId)
+    .then((favorites) => {
+      faveToDelete = favorites;
+    })
+  .then(() => {
+    return knex('favorites')
+    .del()
+    .where('id', paramId)
+  })
+  .then(() => {
+    res.send(faveToDelete)
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+  .finally(() => {
+    // knex.destroy();
+  })
+}
+
 module.exports = {
   getFavorites: getFavorites,
   addFavorite: addFavorite,
-  getFavorite: getFavorite
+  getFavorite: getFavorite,
+  deleteFavorite: deleteFavorite
 }
