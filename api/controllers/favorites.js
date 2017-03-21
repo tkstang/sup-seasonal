@@ -34,7 +34,24 @@ function addFavorite(req, res) {
     })
 }
 
+function getFavorite(req, res) {
+  let knex = require('../../knex.js');
+  let paramId = req.swagger.params.fave_id.value;
+  knex('favorites')
+    .where('id', paramId)
+    .then((favorite) =>{
+      res.status(200).json(favorite);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      // knex.destroy();
+    })
+}
+
 module.exports = {
   getFavorites: getFavorites,
-  addFavorite: addFavorite
+  addFavorite: addFavorite,
+  getFavorite: getFavorite
 }

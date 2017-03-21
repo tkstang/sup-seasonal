@@ -318,7 +318,7 @@ paths:
     get:
       summary: Gets favorited recipe
       description: Returns a single recipe saved to a users favorites.
-      operationId: getFavRecipeById
+      operationId: getFavorite
       parameters:
         - name: fave_id
           in: path
