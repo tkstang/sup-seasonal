@@ -19,12 +19,33 @@ var config = {
 
 app.post('/users', ev(validations.usersPost), function(err, req, res, next) {
   if (err instanceof ev.ValidationError) return res.status(err.status).json(errIsolate.message(err));
+  next();
 });
 
 app.put('/users', ev(validations.usersPost), function(err, req, res, next) {
   if (err instanceof ev.ValidationError) return res.status(err.status).json(errIsolate.message(err));
+  next();
 });
 
+app.post('/foods', ev(validations.foodsPost), function(err, req, res, next) {
+  if (err instanceof ev.ValidationError) return res.status(err.status).json(errIsolate.message(err));
+  next();
+});
+
+app.post('/foods', ev(validations.foodsPost), function(err, req, res, next) {
+  if (err instanceof ev.ValidationError) return res.status(err.status).json(errIsolate.message(err));
+  next();
+});
+
+app.post('/favorites', ev(validations.favoritesPost), function(err, req, res, next) {
+  if (err instanceof ev.ValidationError) return res.status(err.status).json(errIsolate.message(err));
+  next();
+});
+
+app.post('/favorites', ev(validations.favoritesPost), function(err, req, res, next) {
+  if (err instanceof ev.ValidationError) return res.status(err.status).json(errIsolate.message(err));
+  next();
+});
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }

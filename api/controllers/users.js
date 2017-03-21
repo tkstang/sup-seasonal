@@ -32,8 +32,6 @@ function getUser(req, res) {
 }
 
 function addUser(req, res) {
-  console.log('hi');
-	ev(validations.post);
 	let knex = require('../../knex.js');
 	knex('users')
 		.insert({
