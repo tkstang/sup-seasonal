@@ -8,15 +8,14 @@ const app = require('../../../app');
 let knex = require('../../../knex');
 
 const bodyParser = require('body-parser');
-
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 beforeEach(done => {
   knex.migrate.latest()
   .then(() => {
     Promise.all([
       knex('users').insert({
-  			id:	1,
+  			// id:	1,
   			username: 'juicedonjuice',
   			email:	'juiced@gmail.com',
   			permissions: 'user',
@@ -34,7 +33,7 @@ beforeEach(done => {
   			created_by: 1,
         created_at: "2017-03-19T22:30:11.400Z",
         updated_at: "2017-03-19T22:30:11.400Z",
-        id: 1,
+        // id: 1,
   			mar: true,
   			apr: true,
   			may: true,
@@ -49,7 +48,7 @@ beforeEach(done => {
       created_by: 1,
       created_at: "2017-03-19T22:30:11.400Z",
       updated_at: "2017-03-19T22:30:11.400Z",
-      id: 2,
+      // id: 2,
       mar: true,
       apr: true,
       may: true,
@@ -64,7 +63,7 @@ beforeEach(done => {
       created_by: 1,
       created_at: "2017-03-19T22:30:11.400Z",
       updated_at: "2017-03-19T22:30:11.400Z",
-      id: 3,
+      // id: 3,
       mar: true,
       apr: true,
       may: true,
@@ -170,7 +169,7 @@ describe('GET /foods', () => {
   });
 });
 
-xdescribe('GET /foods:id', () => {
+describe('GET /foods:id', () => {
   it('responds with JSON', done => {
     request(app)
       .get('/foods/2')
@@ -206,19 +205,25 @@ xdescribe('GET /foods:id', () => {
 xdescribe('POST /foods', () => {
   const newFood = {
     food_name: 'sunflowers',
-    created_by: 1,
-    created_at: "2017-03-19T22:30:11.400Z",
-    updated_at: "2017-03-19T22:30:11.400Z",
-    id: 4,
-    mar: "true",
-    apr: "true",
-    may: "true",
-    jun: "true",
-    sep: "true",
-    oct: "true",
-    nov: "true",
-    dec: "true"
+    mar: true,
+    apr: true,
+    may: true,
+    jun: true,
+    sep: true,
+    oct: true,
+    nov: true,
+    dec: true
   };
+  const badFood = {
+    mar: true,
+    jan: true,
+    feb: true
+  };
+  const badFoodName = {
+    food_name: true,
+    mar: true,
+    feb: true
+  }
 
   it('responds with JSON', done => {
     request(app)
@@ -229,34 +234,46 @@ xdescribe('POST /foods', () => {
   });
   it('stores the passed obj into the db', done => {
     request(app)
-      .post('foods')
-      // .type('form')
+      .post('/foods')
       .send(newFood)
-      .set('Accept', 'application/json')
       .end((err, res) => {
-        console.log(res);
-        expect(res.body).to.deep.equal([
+//deleting timestamps
+        delete res.body.created_at;
+        delete res.body.updated_at;
+        expect(res.body).to.deep.equal(
           {
             food_name: 'sunflowers',
             created_by: 1,
-            created_at: "2017-03-19T22:30:11.400Z",
-            updated_at: "2017-03-19T22:30:11.400Z",
             id: 4,
-            jan: "false",
-            feb: "false",
-            mar: "true",
-            apr: "true",
-            may: "true",
-            jun: "true",
-            jul: "false",
-            aug: "false",
-            sep: "true",
-            oct: "true",
-            nov: "true",
-            dec: "true"
+            jan: false,
+            feb: false,
+            mar: true,
+            apr: true,
+            may: true,
+            jun: true,
+            jul: false,
+            aug: false,
+            sep: true,
+            oct: true,
+            nov: true,
+            dec: true
           }
-        ])
+        )
         done();
       });
+  });
+  it('returns 400 error when req is missing food_name', done => {
+    request(app)
+      .post('/foods')
+      .send(badFood)
+      .expect('Content-Type', /json/)
+      .expect(400, done);
+  });
+  it('returns 400 error when food_name is not a string', done => {
+    request(app)
+      .post('/foods')
+      .send(badFoodName)
+      .expect('Content-Type', /json/)
+      .expect(400, done);
   });
 });

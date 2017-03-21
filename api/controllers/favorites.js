@@ -15,6 +15,69 @@ function getFavorites(req, res) {
   })
 }
 
+function addFavorite(req, res) {
+  let knex = require('../../knex.js');
+  knex('favorites')
+    .insert({
+      user_id: 1,
+      recipe_id: req.body.recipe_id,
+      month: req.body.month
+    }, '*')
+    .then((favorites) => {
+      res.send(favorites[0]);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      // knex.destroy();
+    })
+}
+
+function getFavorite(req, res) {
+  let knex = require('../../knex.js');
+  let paramId = req.swagger.params.fave_id.value;
+  knex('favorites')
+    .where('id', paramId)
+    .then((favorite) =>{
+      res.status(200).json(favorite);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      // knex.destroy();
+    })
+}
+
+function deleteFavorite(req, res) {
+  let knex = require('../../knex.js');
+  let paramId = req.swagger.params.fave_id.value;
+  let faveToDelete;
+  knex('favorites')
+    .where('id', paramId)
+    .then((favorites) => {
+      faveToDelete = favorites;
+    })
+  .then(() => {
+    return knex('favorites')
+    .del()
+    .where('id', paramId)
+  })
+  .then(() => {
+    res.send(faveToDelete)
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+  .finally(() => {
+    // knex.destroy();
+  })
+}
+
 module.exports = {
-  getFavorites: getFavorites
+  getFavorites: getFavorites,
+  addFavorite: addFavorite,
+  getFavorite: getFavorite,
+  deleteFavorite: deleteFavorite
 }
