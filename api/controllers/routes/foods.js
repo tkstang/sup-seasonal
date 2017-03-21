@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-router.get('/foods', (req, res) = > {
+router.get('/foods', (req, res) => {
   knex('foods')
     .orderBy('food_name')
     .then((foods) => {
@@ -17,7 +17,7 @@ router.get('/foods', (req, res) = > {
   })
   .catch((err) => {
     console.error(err);
-    knex.destroy();
+    // knex.destroy();
     process.exit(1);
   });
 });
