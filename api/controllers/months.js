@@ -27,12 +27,12 @@ function getRecipes(req, res) {
   let fullRecipes = [];
   let goodRecipes = [];
   let seasonalIngredients = '';
-  let month = req.params.month;
+  let month = req.swagger.params.month.value;
   let urlArray = [];
 
 
   knex('foods')
-    .where('jan', true)
+    .where(month, true)
     .then((ingredients) => {
       ingredients.forEach((element) => {
         if (ingredients.indexOf(element) === 0) {
@@ -45,7 +45,7 @@ function getRecipes(req, res) {
     })
 
     .then(() =>{
-      let url = `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ingredients='broccoli'`;
+      let url = `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ingredients='${seasonalIngredients}'`;
 
       return fetch(url, {
         method: 'get',
