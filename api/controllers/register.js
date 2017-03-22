@@ -21,7 +21,8 @@ function userRegistration(req, res){
       res.status(200).json(newUser);
     })
     .catch((err) => {
-      console.error(err);
+      let errMessage = err.detail.slice(4).replace(/[{()}]/g, '').replace(/[=]/g, ' ');
+      res.status(400).json(errMessage);
     })
   	.finally(() => {
   		// knex.destroy();

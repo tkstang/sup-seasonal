@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
 
     table.string('username')
       .notNullable()
-      .defaultTo('');
+      .unique();
 
     table.string('email')
       .notNullable()
