@@ -3,10 +3,10 @@ info:
   version: "0.0.1"
   title: Sup Seasonal
 # during dev, should point to your local machine
-host: localhost:10042
-# basePath prefixes all resource paths 
+host: localhost:10010
+# basePath prefixes all resource paths
 basePath: /
-# 
+#
 schemes:
   # tip: remove http to make production-grade
   - http
@@ -19,9 +19,11 @@ paths:
   /foods:
     x-swagger-router-controller: foods
     get:
+      consumes:
+        - application/json
       summary: Gets all foods
       description: Returns a list of all foods and their seasonal information.
-      operationId: getFoods
+      operationId: getAllFoods
       responses:
         "200":
           description: Foods response
@@ -32,6 +34,8 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
+      consumes:
+        - application/json
       summary: Adds a food
       description: Adds a new food and its seasonal information to the foods list.
       operationId: addFood
@@ -51,18 +55,18 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /foods/{food}:
+  /foods/{food_id}:
     x-swagger-router-controller: foods
     get:
       summary: Gets a single food item
       description: Returns all seasonal information about a given food.
       operationId: getFood
       parameters:
-        - name: food
+        - name: food_id
           in: path
-          description: Name of food
+          description: ID of food to get
           required: true
-          type: string
+          type: integer
       responses:
         "200":
           description: Food response
@@ -77,11 +81,11 @@ paths:
       description: Updates the seasonal information about a given food item.
       operationId: updateFood
       parameters:
-        - name: food
+        - name: food_id
           in: path
-          description: Name of food
+          description: ID of food to update
           required: true
-          type: string
+          type: integer
         - name: food
           in: body
           required: true
@@ -101,11 +105,11 @@ paths:
       description: Removes a food from the foods list.
       operationId: deleteFood
       parameters:
-        - name: food
+        - name: food_id
           in: path
-          description: The food to delete
+          description: ID of food to delete
           required: true
-          type: string
+          type: integer
       responses:
         "204":
           description: Food deleted
@@ -155,25 +159,250 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /months/{month}/favorites:
+    x-swagger-router-controller: favorites
+    get:
+      summary: Gets favorited recipes by month
+      description: Returns a list of all favorited recipes for ingredients from a specific month.
+      operationId: getFavoritesByMonth
+      parameters:
+        - name: month
+          in: path
+          description: Month of the year
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Favorites by month response
+          schema:
+            $ref: "#/definitions/FavoritesByMonthList"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /users:
+    x-swagger-router-controller: users
     get:
       summary: Gets all users
       description: Returns a list of all users and their information.
-      operationId: getUsers
+      operationId: getAllUsers
       responses:
         "200":
           description: Users response
           schema:
-            $ref: "#/definitions/RecipeList"
+            $ref: "#/definitions/UsersList"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      summary: Add a user
+      description: Adds a new user to the users list.
+      operationId: addUser
+      parameters:
+        - name: user
+          in: body
+          description: The user to add.
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: Added user response
+          schema:
+            $ref: "#/definitions/User"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/{user_id}:
+    x-swagger-router-controller: users
+    get:
+      summary: Gets a user
+      description: Returns a single user.
+      produces:
+       - application/json
+      operationId: getUser
+      parameters:
+        - name: user_id
+          in: path
+          description: User's ID
+          required: true
+          type: integer
+      responses:
+        "200":
+          description: User response
+          schema:
+            $ref: "#/definitions/User"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      summary: Update a single user
+      description: Updates a user's information.
+      operationId: updateUser
+      parameters:
+        - name: user_id
+          in: path
+          description: User's ID
+          required: true
+          type: integer
+        - name: user
+          in: body
+          description: The user to update.
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: Updated user response
+          schema:
+            $ref: "#/definitions/User"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      summary: Removes a user
+      description: Removes a user from the users list.
+      operationId: deleteUser
+      parameters:
+        - name: user_id
+          in: path
+          description: User's ID
+          required: true
+          type: integer
+      responses:
+        "204":
+          description: User deleted
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /favorites:
+    x-swagger-router-controller: favorites
+    get:
+      summary: Gets all favorited recipes
+      description: Returns a list of all of a user's favorited recipes.
+      operationId: getFavorites
+      responses:
+        "200":
+          description: Favorites response
+          schema:
+            $ref: "#/definitions/FavoritesList"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      consumes:
+        - application/json
+      summary: Adds a favorite
+      description: Adds a favorite and it's info to the list.
+      operationId: addFavorite
+      parameters:
+        - name: favorite
+          in: body
+          description: The recipe to be added to favorites.
+          required: true
+          schema:
+            $ref: "#/definitions/Favorite"
+      responses:
+        "200":
+          description: Added favorite response
+          schema:
+            $ref: "#/definitions/Favorite"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /favorites/{fave_id}:
+    x-swagger-router-controller: favorites
+    get:
+      summary: Gets favorited recipe
+      description: Returns a single recipe saved to a users favorites.
+      operationId: getFavorite
+      parameters:
+        - name: fave_id
+          in: path
+          description: ID of favorited recipe
+          required: true
+          type: integer
+      responses:
+        "200":
+          description: Favorite recipe by ID response
+          schema:
+            $ref: "#/definitions/Recipe"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      summary: Removes a favorite
+      description: Removes a favorite from the favorites table by ID.
+      operationId: deleteFavorite
+      parameters:
+        - name: fave_id
+          in: path
+          description: Favorite's ID
+          required: true
+          type: integer
+      responses:
+        "204":
+          description: Favorite deleted
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /login:
+    x-swagger-router-controller: login
+    post:
+      summary: User login
+      description: User provides credentials for log in.
+      operationId: userLogin
+      parameters:
+        - name: credentials
+          in: body
+          description: The users credentials for log in.
+          required: true
+          schema:
+            $ref: "#/definitions/Credentials"
+      responses:
+        "200":
+          description: Authenticated user response
+          schema:
+            $ref: "#/definitions/Authenticated"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /register:
+    x-swagger-router-controller: register
+    post:
+      summary: Account registration
+      description: User provides information to register a new account.
+      operationId: userRegistration
+      parameters:
+        - name: user info
+          in: body
+          description: The users information to register a new account.
+          required: true
+          schema:
+            $ref: "#/definitions/Registration"
+      responses:
+        "200":
+          description: Account registration response
+          schema:
+            $ref: "#/definitions/RegisteredUser"
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
-# complex objects have schema definitions
 definitions:
-  FoodsList: 
+  FoodsList:
     required:
       - foods
     properties:
@@ -183,71 +412,11 @@ definitions:
           $ref: "#/definitions/Food"
   Food:
     required:
-      - id
       - food_name
-      - created_by
-      - created_at
-      - updated_at
-      - jan
-      - feb
-      - mar
-      - apr
-      - may
-      - jun
-      - jul
-      - aug
-      - sep
-      - oct
-      - nov
-      - dec
     properties:
-      id:
-        type: integer
       food_name:
         type: string
-      created_by:
-        type: string
-      created_at:
-        type: string
-      updated_at:
-        type: string
-      jan:
-        type: boolean
-        default: false
-      feb:
-        type: boolean
-        default: false
-      mar:
-        type: boolean
-        default: false
-      apr:
-        type: boolean
-        default: false
-      may:
-        type: boolean
-        default: false
-      jun:
-        type: boolean
-        default: false
-      jul:
-        type: boolean
-        default: false
-      aug:
-        type: boolean
-        default: false
-      sep:
-        type: boolean
-        default: false
-      oct:
-        type: boolean
-        default: false
-      nov:
-        type: boolean
-        default: false
-      dec:
-        type: boolean
-        default: false
-  RecipeList: 
+  RecipeList:
     required:
       - recipes
     properties:
@@ -257,29 +426,43 @@ definitions:
           $ref: "#/definitions/Recipe"
   Recipe:
     required:
-      - id 
+      - id
+      - servings
+      - sourceURL
       - title
+      - readyInMinutes
       - image
       - imageType
-      - usedIngredientCount
-      - missedIngredientCount
-      - likes
+      - extendedIngredients
+      - instructions
     properties:
       id:
         type: integer
+      servings:
+        type: integer
+      sourceURL:
+        type: string
       title:
         type: string
+      readyInMinutes:
+          type: integer
       image:
         type: string
       imageType:
         type: string
-      usedIngredientCount:
-        type: integer
-      missedIngredientCount:
-        type: integer
-      likes:
-        type: integer
-  FavoriteList: 
+      extendedIngredients:
+        type: object
+      instructions:
+        type: string
+  FavoritesList:
+    required:
+      - favorites
+    properties:
+      favorites:
+        type: array
+        items:
+          $ref: "#/definitions/Favorite"
+  FavoritesByMonthList:
     required:
       - favorites
     properties:
@@ -289,26 +472,17 @@ definitions:
           $ref: "#/definitions/Favorite"
   Favorite:
     required:
-      - id 
       - user_id
       - recipe_id
       - month
-      - created_at
-      - updated_at
     properties:
-      id:
-        type: integer
       user_id:
         type: integer
       recipe_id:
         type: integer
       month:
         type: string
-      created_at:
-        type: string
-      updated_at:
-        type: string
-  UserList:
+  UsersList:
     required:
       - users
     properties:
@@ -318,13 +492,55 @@ definitions:
           $ref: "#/definitions/User"
   User:
     required:
-      - id
       - username
       - email
       - permissions
       - hashed_password
-      - created_at
-      - updated_at
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+      permissions:
+        type: string
+      hashed_password:
+        type: string
+  Credentials:
+    required:
+      - email
+      - hashed_password
+    properties:
+      email:
+        type: string
+      hashed_password:
+        type: string
+  Authenticated:
+    required:
+      - email
+      - user_id
+    properties:
+      email:
+        type: string
+      user_id:
+        type: integer
+  Registration:
+    required:
+      - email
+      - password
+      - username
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+  RegisteredUser:
+    required:
+      - id
+      - username
+      - email
+      - permissions
     properties:
       id:
         type: integer
@@ -334,13 +550,6 @@ definitions:
         type: string
       permissions:
         type: string
-      hashed_password:
-        type: string
-      created_at:
-        type: string
-      updated_at:
-        type: string
-        
   ErrorResponse:
     required:
       - message
