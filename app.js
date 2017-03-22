@@ -17,34 +17,35 @@ var config = {
   appRoot: __dirname // required config
 };
 
-app.post('/users', ev(validations.usersPost), function(err, req, res, next) {
-  if (err instanceof ev.ValidationError) return res.status(err.status).json(errIsolate.message(err));
+function checkValidationError(err, req, res, next){
+  if (err instanceof ev.ValidationError) {
+    return res.status(err.status).json(errIsolate.message(err));
+  }
   next();
+}
+
+app.post('/users', ev(validations.usersPost), function(err, req, res, next) {
+  checkValidationError(err, req, res, next);
 });
 
 app.put('/users', ev(validations.usersPost), function(err, req, res, next) {
-  if (err instanceof ev.ValidationError) return res.status(err.status).json(errIsolate.message(err));
-  next();
+  checkValidationError(err, req, res, next);
 });
 
 app.post('/foods', ev(validations.foodsPost), function(err, req, res, next) {
-  if (err instanceof ev.ValidationError) return res.status(err.status).json(errIsolate.message(err));
-  next();
+  checkValidationError(err, req, res, next);
 });
 
-app.post('/foods', ev(validations.foodsPost), function(err, req, res, next) {
-  if (err instanceof ev.ValidationError) return res.status(err.status).json(errIsolate.message(err));
-  next();
-});
-
-app.post('/favorites', ev(validations.favoritesPost), function(err, req, res, next) {
-  if (err instanceof ev.ValidationError) return res.status(err.status).json(errIsolate.message(err));
-  next();
+app.put('/foods', ev(validations.foodsPost), function(err, req, res, next) {
+  checkValidationError(err, req, res, next);
 });
 
 app.post('/favorites', ev(validations.favoritesPost), function(err, req, res, next) {
-  if (err instanceof ev.ValidationError) return res.status(err.status).json(errIsolate.message(err));
-  next();
+  checkValidationError(err, req, res, next);
+});
+
+app.put('/favorites', ev(validations.favoritesPost), function(err, req, res, next) {
+  checkValidationError(err, req, res, next);
 });
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
