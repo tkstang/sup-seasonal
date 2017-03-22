@@ -21,6 +21,22 @@ function getRecipeJson(url) {
     });
 }
 
+function getMonth(req, res) {
+  let knex = require('../../knex.js');
+  let month = req.swagger.params.month.value;
+  knex('foods')
+    .where(month, true)
+    .then((ingredients) => {
+      res.status(200).json(ingredients);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      // knex.destroy();
+    })
+}
+
 function getRecipes(req, res) {
   let knex = require('../../knex.js');
   let recipeIds = [];
@@ -83,6 +99,7 @@ function getRecipes(req, res) {
       fullRecipes.forEach((element) => {
         if(element.instructions !== null) {
           let shortenedRecipe = {
+            id: element.id,
             servings: element.servings,
             sourceURL: element.sourceURL,
             title: element.title,
@@ -99,6 +116,8 @@ function getRecipes(req, res) {
 
     .then(() => {
       console.log(goodRecipes);
+      res.send(goodRecipes);
+
       // console.log(seasonalIngredients);
     })
 
@@ -112,5 +131,6 @@ function getRecipes(req, res) {
 }
 
 module.exports = {
+  getMonth: getMonth,
   getRecipes:getRecipes
 }

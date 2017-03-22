@@ -378,25 +378,34 @@ definitions:
           $ref: "#/definitions/Recipe"
   Recipe:
     required:
+      - id
+      - servings
+      - sourceURL
       - title
+      - readyInMinutes
       - image
       - imageType
-      - usedIngredientCount
-      - missedIngredientCount
-      - likes
+      - extendedIngredients
+      - instructions
     properties:
+      id:
+        type: integer
+      servings:
+        type: integer
+      sourceURL:
+        type: string
       title:
         type: string
+      readyInMinutes:
+          type: integer
       image:
         type: string
       imageType:
         type: string
-      usedIngredientCount:
-        type: integer
-      missedIngredientCount:
-        type: integer
-      likes:
-        type: integer
+      extendedIngredients:
+        type: object
+      instructions:
+        type: string
   FavoritesList:
     required:
       - favorites
