@@ -16,7 +16,7 @@ beforeEach(done => {
 				username: 'juicedonjuice',
 				email:	'juiced@gmail.com',
 				permissions: 'user',
-				hashed_password: 'some14charpass',
+				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
 				created_at:	'2017-03-20T01:22:54.526Z',
 				updated_at:	'2017-03-20T01:22:54.526Z'
 			}),
@@ -25,7 +25,7 @@ beforeEach(done => {
 				username: 'fruity4life',
 				email:	'fruity4life@gmail.com',
 				permissions: 'user',
-				hashed_password: 'some14charpass',
+				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
 				created_at:	'2017-03-20T01:22:56.526Z',
 				updated_at:	'2017-03-20T01:22:56.526Z'
 			}),
@@ -34,7 +34,7 @@ beforeEach(done => {
 				username: 'tommytomato',
 				email:	'tommytomato@gmail.com',
 				permissions: 'user',
-				hashed_password: 'some14charpass',
+				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
 				created_at:	'2017-03-20T01:22:58.526Z',
 				updated_at:	'2017-03-20T01:22:58.526Z'
 			})
@@ -75,7 +75,7 @@ describe('GET /users', () => {
 				username: 'juicedonjuice',
 				email:	'juiced@gmail.com',
 				permissions: 'user',
-				hashed_password: 'some14charpass',
+				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
 				created_at:	'2017-03-20T01:22:54.526Z',
 				updated_at:	'2017-03-20T01:22:54.526Z'
 			},{
@@ -83,7 +83,7 @@ describe('GET /users', () => {
 				username: 'fruity4life',
 				email:	'fruity4life@gmail.com',
 				permissions: 'user',
-				hashed_password: 'some14charpass',
+				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
 				created_at:	'2017-03-20T01:22:56.526Z',
 				updated_at:	'2017-03-20T01:22:56.526Z'
 			},{
@@ -91,7 +91,7 @@ describe('GET /users', () => {
 				username: 'tommytomato',
 				email:	'tommytomato@gmail.com',
 				permissions: 'user',
-				hashed_password: 'some14charpass',
+				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
 				created_at:	'2017-03-20T01:22:58.526Z',
 				updated_at:	'2017-03-20T01:22:58.526Z'
 			}], done);
@@ -114,7 +114,7 @@ describe('GET /users/2', () => {
 				username: 'fruity4life',
 				email:	'fruity4life@gmail.com',
 				permissions: 'user',
-				hashed_password: 'some14charpass',
+				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
 				created_at:	'2017-03-20T01:22:56.526Z',
 				updated_at:	'2017-03-20T01:22:56.526Z'
 			}], done);

@@ -1,8 +1,10 @@
 'use strict';
 
+const bcrypt = require('bcrypt-as-promised');
+
 function userRegistration(req, res){
   const knex = require('../../knex.js');
-  bcrypt.hash(req.body.password), 1)
+  bcrypt.hash(req.body.password, 1)
     .then(result => {
       const user = {
         username: req.body.username,

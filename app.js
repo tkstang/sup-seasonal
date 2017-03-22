@@ -5,6 +5,7 @@ var app = require('express')();
 const bodyParser = require('body-parser');
 const ev = require('express-validation');
 const Joi = require('joi');
+const bcrypt = require('bcrypt');
 const errIsolate = require('./validations/errIsolation.js');
 const validations = require('./validations/validations.js');
 app.use(bodyParser.json());
