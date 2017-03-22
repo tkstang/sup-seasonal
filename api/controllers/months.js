@@ -3,10 +3,29 @@ const fetch = require('node-fetch');
 fetch.Promise = require('bluebird');
 
 function getRecipes(req, res) {
-  var url = `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ingredients='broccoli'`;
+  let knex = require('../../knex.js');
   let recipeIds = [];
   let fullRecipes = [];
   let goodRecipes = [];
+  let seasonalIngredients = ''
+  let month = req.params.month;
+  knex('foods')
+    .where('jan ', true)
+    .then((ingredients) => {
+      console.log('Yo!' + ingredients[0].food_name);
+      ingredients.forEach((element) => {
+        if (ingredients.indexOf(element) === 0) {
+          seasonalIngredients += element.food_name;
+        }
+        else {
+        seasonalIngredients += ',' + element.food_name;
+        }
+      })
+    })
+
+
+  var url = `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ingredients='broccoli'`;
+
 
   fetch(url, {
     method: 'get',
@@ -62,7 +81,9 @@ function getRecipes(req, res) {
         goodRecipes.push(shortenedRecipe);
       }
     })
+  // console.log(goodRecipes);
   console.log(goodRecipes);
+  console.log(seasonalIngredients);
   }, 3000)
 
 }
