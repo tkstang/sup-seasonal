@@ -33,7 +33,7 @@ beforeEach(done => {
         created_at: "2017-03-19T22:30:11.400Z",
         updated_at: "2017-03-19T22:30:11.400Z",
         // id: 1,
-  			mar: true,
+        jan: true,
   			apr: true,
   			may: true,
   			jun: true,
@@ -94,3 +94,56 @@ afterEach(done => {
 after(() => {
 	knex.destroy()
 })
+
+describe('GET /months/{month}', () => {
+  it('responds with JSON', done => {
+    request(app)
+      .get('/months/mar')
+      .expect('Content-Type', /json/)
+      .expect(200, done);
+  });
+  it('returns all foods in season in param month', done => {
+    request(app)
+      .get('/months/mar')
+      .expect(200, [
+        {
+       food_name: 'carrots',
+       created_by: 1,
+       created_at: "2017-03-19T22:30:11.400Z",
+       updated_at: "2017-03-19T22:30:11.400Z",
+       id: 2,
+       jan: false,
+       feb: false,
+       mar: true,
+       apr: true,
+       may: true,
+       jun: true,
+       jul: false,
+       aug: false,
+       sep: true,
+       oct: true,
+       nov: true,
+       dec: true
+       },
+       {
+       food_name: 'barley',
+       created_by: 1,
+       created_at: "2017-03-19T22:30:11.400Z",
+       updated_at: "2017-03-19T22:30:11.400Z",
+       id: 3,
+       jan: false,
+       feb: false,
+       mar: true,
+       apr: true,
+       may: true,
+       jun: true,
+       jul: false,
+       aug: false,
+       sep: true,
+       oct: true,
+       nov: true,
+       dec: true
+       }
+     ], done);
+  });
+});
