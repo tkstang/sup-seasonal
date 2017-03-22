@@ -516,13 +516,22 @@ definitions:
         type: string
   Authenticated:
     required:
+      - id
+      - username
       - email
-      - user_id
+      - permissions
+      - token
     properties:
+      id:
+        type: integer
+      username:
+        type: string
       email:
         type: string
-      user_id:
-        type: integer
+      permissions:
+        type: string
+      token:
+        type: string
   Registration:
     required:
       - email
