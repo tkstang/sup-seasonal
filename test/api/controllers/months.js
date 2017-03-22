@@ -146,4 +146,23 @@ describe('GET /months/{month}', () => {
        }
      ], done);
   });
+
+});
+
+describe('GET /months/{month}/recipes', () => {
+  it('responds with JSON', done => {
+    request(app)
+      .get('/months/nov/recipes')
+      .expect('Content-Type', /json/)
+      .expect(200, done);
+  });
+  it('returns a list of recipes', done => {
+    request(app)
+      .get('/months/nov/recipes')
+      .end((err, res) => {
+        expect(res.body).to.be.a(array);
+        expect(res.body[0]).to.have.all.keys('insructions', 'id');
+      })
+    done();
+  })
 });
