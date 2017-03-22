@@ -28,7 +28,7 @@ beforeEach(done => {
   .then(() => {
     Promise.all([
       knex('foods').insert([{
-  			food_name: 'tulips',
+  			food_name: 'turnips',
   			created_by: 1,
         created_at: "2017-03-19T22:30:11.400Z",
         updated_at: "2017-03-19T22:30:11.400Z",
@@ -43,7 +43,7 @@ beforeEach(done => {
   			dec: true
   	   },
        {
-      food_name: 'roses',
+      food_name: 'carrots',
       created_by: 1,
       created_at: "2017-03-19T22:30:11.400Z",
       updated_at: "2017-03-19T22:30:11.400Z",
@@ -58,7 +58,7 @@ beforeEach(done => {
       dec: true
       },
       {
-      food_name: 'daisies',
+      food_name: 'barley',
       created_by: 1,
       created_at: "2017-03-19T22:30:11.400Z",
       updated_at: "2017-03-19T22:30:11.400Z",

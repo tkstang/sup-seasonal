@@ -10,6 +10,9 @@ let knex = require('../../../knex');
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
+const fetch = require('node-fetch');
+fetch.Promise = require('bluebird');
+
 
 beforeEach(done => {
   knex.migrate.latest()
@@ -26,6 +29,56 @@ beforeEach(done => {
   		})
     ])
 
+  })
+  .then(() => {
+    Promise.all([
+      knex('foods').insert([{
+  			food_name: 'turnips',
+  			created_by: 1,
+        created_at: "2017-03-19T22:30:11.400Z",
+        updated_at: "2017-03-19T22:30:11.400Z",
+        // id: 1,
+  			mar: true,
+  			apr: true,
+  			may: true,
+  			jun: true,
+  			sep: true,
+  			oct: true,
+  			nov: true,
+  			dec: true
+  	   },
+       {
+      food_name: 'carrots',
+      created_by: 1,
+      created_at: "2017-03-19T22:30:11.400Z",
+      updated_at: "2017-03-19T22:30:11.400Z",
+      // id: 2,
+      mar: true,
+      apr: true,
+      may: true,
+      jun: true,
+      sep: true,
+      oct: true,
+      nov: true,
+      dec: true
+      },
+      {
+      food_name: 'barley',
+      created_by: 1,
+      created_at: "2017-03-19T22:30:11.400Z",
+      updated_at: "2017-03-19T22:30:11.400Z",
+      // id: 3,
+      mar: true,
+      apr: true,
+      may: true,
+      jun: true,
+      sep: true,
+      oct: true,
+      nov: true,
+      dec: true
+      }
+      ])
+    ])
   })
   .then(() => {
     Promise.all([
@@ -125,18 +178,28 @@ describe('GET /favorites:id', () => {
     .expect('Content-Type', /json/)
     .expect(200, done);
   });
-  it('returns fave corresponding to ID param', () => {
-    request(app)
-    .get('/favorites/2')
-    .expect(200, {
-      user_id: 1,
-      recipe_id: 54321,
-      month: 'feb',
-      created_at: "2017-03-19T22:30:11.400Z",
-      updated_at: "2017-03-19T22:30:11.400Z",
-      id: 2
-    })
-  });
+    it('returns recipe related to fave recipeID', () => {
+      request(app)
+        .get('favorites/2')
+        .expect(200, [ { id: 479101,
+    servings: 4,
+    sourceURL: undefined,
+    title: 'On the Job: Pan Roasted Cauliflower From Food52',
+    readyInMinutes: 20,
+    image: 'https://spoonacular.com/recipeImages/On-the-Job--Pan-Roasted-Cauliflower-From-Food52-479101.jpg',
+    imageType: 'jpg',
+    extendedIngredients:
+     [ [Object],
+       [Object],
+       [Object],
+       [Object],
+       [Object],
+       [Object],
+       [Object],
+       [Object],
+       [Object] ]
+    }])
+  })
 });
 
 describe('POST /favorites', () => {
