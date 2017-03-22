@@ -5,12 +5,22 @@ var app = require('express')();
 const bodyParser = require('body-parser');
 const ev = require('express-validation');
 const Joi = require('joi');
+const bcrypt = require('bcrypt-as-promised');
+const jwt = require('jsonwebtoken');
 const errIsolate = require('./validations/errIsolation.js');
 const validations = require('./validations/validations.js');
+const dotenv = require('dotenv')
+dotenv.load();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 module.exports = app; // for testing
 
 var config = {

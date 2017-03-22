@@ -508,11 +508,11 @@ definitions:
   Credentials:
     required:
       - email
-      - hashed_password
+      - password
     properties:
       email:
         type: string
-      hashed_password:
+      password:
         type: string
   Authenticated:
     required:
