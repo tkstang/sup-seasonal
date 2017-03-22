@@ -286,6 +286,13 @@ paths:
       summary: Gets all favorited recipes
       description: Returns a list of all of a user's favorited recipes.
       operationId: getFavorites
+      parameters:
+        - name: token
+          in: header
+          description: User token
+          required: true
+          type: string
+          format: string
       responses:
         "200":
           description: Favorites response
@@ -308,6 +315,12 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/Favorite"
+        - name: token
+          in: header
+          description: User token
+          required: true
+          type: string
+          format: string
       responses:
         "200":
           description: Added favorite response
@@ -329,6 +342,12 @@ paths:
           description: ID of favorited recipe
           required: true
           type: integer
+        - name: token
+          in: header
+          description: User token
+          required: true
+          type: string
+          format: string
       responses:
         "200":
           description: Favorite recipe by ID response
@@ -348,6 +367,12 @@ paths:
           description: Favorite's ID
           required: true
           type: integer
+        - name: token
+          in: header
+          description: User token
+          required: true
+          type: string
+          format: string
       responses:
         "204":
           description: Favorite deleted
