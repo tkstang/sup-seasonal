@@ -1,6 +1,7 @@
 'use strict';
 
 const bcrypt = require('bcrypt-as-promised');
+const jwt = require('jsonwebtoken');
 
 function userRegistration(req, res){
   const knex = require('../../knex.js');
