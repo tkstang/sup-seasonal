@@ -13,6 +13,8 @@ app.use(bodyParser.json());
 const fetch = require('node-fetch');
 fetch.Promise = require('bluebird');
 
+let token = '';
+
 
 beforeEach(done => {
   knex.migrate.latest()
@@ -27,8 +29,8 @@ beforeEach(done => {
         updated_at:	'2017-03-19 18:22:58.526251-07'
       },
       {
-        username: 'gorillatoucher',
-        email:	'gtoucher@gmail.com',
+        username: 'gorillabiscuitoucher',
+        email:	'gstoucher@gmail.com',
         permissions: 'user',
         hashed_password: 'blah',
         created_at:	'2017-03-20 18:22:58.526251-07',
@@ -123,7 +125,7 @@ beforeEach(done => {
         // id: 1
       },
       {
-        user_id: 1,
+        user_id: 6,
         recipe_id: 54321,
         month: 'feb',
         created_at: "2017-03-19T22:30:11.400Z",
@@ -131,7 +133,7 @@ beforeEach(done => {
         // id: 2
       },
       {
-        user_id: 5,
+        user_id: 7,
         recipe_id: 66666,
         month: 'apr',
         created_at: "2017-03-19T22:30:11.400Z",
@@ -140,6 +142,8 @@ beforeEach(done => {
       }
     ])
   ])
+
+
 })
 
 
@@ -167,13 +171,16 @@ describe('GET /favorites', () => {
   it('responds with JSON', done => {
     request(app)
     .get('/favorites')
+    .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInBlcm1pc3Npb25zIjoidXNlciIsImlhdCI6MTQ5MDI5NDQ3MiwiZXhwIjoxNDkwODk5MjcyfQ.FTtt0lNXBcQ36NKhITlHhsS0B_0XwfMIHl-kQcYoJx0')
     .expect('Content-Type', /json/)
     .expect(200, done);
   });
+
   it('returns a list of all faves in db', done => {
+    console.log('this is TOKEN!' + token);
     request(app)
     .get('/favorites')
-    .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsInBlcm1pc3Npb25zIjoidXNlciIsImlhdCI6MTQ5MDI4NDg4MSwiZXhwIjoxNDkwODg5NjgxfQ.FyqA-EbYW5nmmaBJaS_TcadAEDqZ66PJOjenRhx_9-Y')
+    .set('token', token)
     .expect(200, [
       {
         user_id: 1,
@@ -184,7 +191,7 @@ describe('GET /favorites', () => {
         id: 1
       },
       {
-        user_id: 1,
+        user_id: 7,
         recipe_id: 54321,
         month: 'feb',
         created_at: "2017-03-19T22:30:11.400Z",
@@ -192,7 +199,7 @@ describe('GET /favorites', () => {
         id: 2
       },
       {
-        user_id: 1,
+        user_id: 6,
         recipe_id: 66666,
         month: 'apr',
         created_at: "2017-03-19T22:30:11.400Z",
@@ -236,7 +243,6 @@ describe('GET /favorites:id', () => {
 
 describe('POST /favorites', () => {
   const newFave = {
-    user_id: 1,
     recipe_id: 98765,
     month: 'mar'
   };
@@ -267,10 +273,26 @@ describe('POST /favorites', () => {
     recipe_id: 98765,
     month: 'mar'
   }
+  // it('testing for token', done => {
+  //   let loginCred = {
+  //     email: 'gbiscuit@gmail.com',
+  //     username: 'gorillabiscuit',
+  //     password: 'blahblahblah'
+  //   }
+  //   request(app)
+  //   .post('/users/register')
+  //   .send(loginCred)
+  //   .end((err, res) => {
+  //     console.log(res.body);
+  //     token = res.body.token;
+  //   })
+  //   done();
+  // })
 
-  it('responds with JSON', done => {
+  it.only('responds with JSON', done => {
     request(app)
     .post('/favorites')
+    .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInBlcm1pc3Npb25zIjoidXNlciIsImlhdCI6MTQ5MDI5NDQ3MiwiZXhwIjoxNDkwODk5MjcyfQ.FTtt0lNXBcQ36NKhITlHhsS0B_0XwfMIHl-kQcYoJx0')
     .send(newFave)
     .expect('Content-Type', /json/)
     .expect(200, done);
@@ -278,6 +300,7 @@ describe('POST /favorites', () => {
   it('stores the passed obj into the db', done => {
     request(app)
     .post('/favorites')
+    .set('token', token)
     .send(newFave)
     .end((err, res) => {
       console.log(newFave);

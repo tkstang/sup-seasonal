@@ -48,11 +48,9 @@ app.post('/users/login', ev(validations.usersLogin), function(err, req, res, nex
   checkValidationError(err, req, res, next);
 });
 
-app.post('/users/register', ev(validations.usersRegister), function(err, req, res, next) {
-  checkValidationError(err, req, res, next);
-});
 
-app.put('/users', ev(validations.usersPost), function(err, req, res, next) {
+
+app.put('/users', ev(validations.usersRegister), function(err, req, res, next) {
   checkValidationError(err, req, res, next);
 });
 
@@ -64,9 +62,9 @@ app.put('/foods', ev(validations.foodsPost), function(err, req, res, next) {
   checkValidationError(err, req, res, next);
 });
 
-app.post('/favorites', ev(validations.favoritesPost), function(err, req, res, next) {
-  checkValidationError(err, req, res, next);
-});
+// app.post('/favorites', ev(validations.favoritesPost), function(err, req, res, next) {
+//   checkValidationError(err, req, res, next);
+// });
 
 app.put('/favorites', ev(validations.favoritesPost), function(err, req, res, next) {
   checkValidationError(err, req, res, next);

@@ -58,10 +58,7 @@ module.exports.foodsPost = {
 
 module.exports.favoritesPost = {
   body: {
-    user_id: Joi.number()
-    .integer()
-    .min(1)
-    .required(),
+
     recipe_id: Joi.number()
     .integer()
     .min(1)

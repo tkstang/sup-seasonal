@@ -57,6 +57,7 @@ function addFavorite(req, res) {
       month: req.body.month
     }, '*')
     .then((favorites) => {
+      console.log('teeeeeest!');
       res.send(favorites[0]);
     })
     .catch((err) => {
