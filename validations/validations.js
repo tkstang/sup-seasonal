@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const ev = require('express-validation');
 
 module.exports.usersRegister = {
   body: {
@@ -58,26 +59,26 @@ module.exports.foodsPost = {
 
 module.exports.favoritesPost = {
   body: {
-    user_id: Joi.number()
-    .integer()
-    .min(1)
-    .required(),
     recipe_id: Joi.number()
     .integer()
     .min(1)
-    .required(),
-    permissions: Joi.string()
-    .min(3)
-    .max(10)
     .required(),
     month: Joi.string()
       .max(3)
     }
 }
 
+function isolateErrMessage(err){
+	let errObject = err.errors[0];
+	let field = errObject.field;
+	let message = errObject.messages[0].split(`\" `)[1];
+	let errMessage = `${field}: ${message}`;
+	return errMessage;
+}
+
 module.exports.checkValError = function checkValidationError(err, req, res, next){
   if (err instanceof ev.ValidationError) {
-    return res.status(err.status).json(errIsolate.message(err));
+    return res.status(err.status).json(isolateErrMessage(err));
   }
   next();
 }
