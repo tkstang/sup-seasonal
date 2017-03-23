@@ -205,25 +205,6 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-    post:
-      description: Adds a new user to the list of registered users.
-      operationId: addUser
-      parameters:
-        - name: user
-          in: body
-          description: The user to add.
-          required: true
-          schema:
-            $ref: "#/definitions/User"
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "#/definitions/User"
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
   /users/{user_id}:
     x-swagger-router-controller: users
     get:

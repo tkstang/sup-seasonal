@@ -48,27 +48,6 @@ function getUser(req, res) {
   });
 }
 
-// ----- Is there really any reason for this route? If not remove here and from YAML ----- //
-// function addUser(req, res) {
-//   let knex = require('../../knex.js');
-//   knex('users')
-//   .insert({
-//     username: req.body.username,
-//     email: req.body.email,
-//     permissions: req.body.permissions,
-//     hashed_password: req.body.hashed_password
-//   }, '*')
-//   .then((user) => {
-//     res.send(user[0]);
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   })
-//   .finally(() => {
-//     // knex.destroy();
-//   });
-// }
-
 function updateUser(req, res) {
   let knex = require('../../knex.js');
   let paramId = req.swagger.params.user_id.value;

@@ -1,28 +1,5 @@
 const Joi = require('joi');
 
-// Remove if removing usersPost
-// module.exports.usersPost = {
-//   body: {
-//     username: Joi.string()
-//     .label('username')
-//     .alphanum()
-//     .max(20)
-//     .required(),
-//     email: Joi.string()
-//     .label('e-mail')
-//     .email()
-//     .max(30)
-//     .required(),
-//     permissions: Joi.string()
-//     .label('permissions')
-//     .max(12),
-//     hashed_password: Joi.string()
-//     .label('hashed password')
-//     .max(20)
-//     .required()
-//   }
-// }
-
 module.exports.usersRegister = {
   body: {
     username: Joi.string()
