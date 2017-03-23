@@ -5,7 +5,7 @@ fetch.Promise = require('bluebird');
 
 //Helper function to get recipe information using fetch
 function getRecipeJson(url) {
-  return   fetch(url, {
+  return fetch(url, {
       method: 'get',
       headers: {
         'x-Mashape-Key': 'yyYYCMfoelmshn9iLWJzawTgalGTp1sEI5ejsnYwhNrq3f48S8'
@@ -23,19 +23,19 @@ function getRecipeJson(url) {
 }
 
 function getMonth(req, res) {
-  let knex = require('../../knex.js');
-  let month = req.swagger.params.month.value;
-  knex('foods')
-    .where(month, true)
-    .then((ingredients) => {
-      res.status(200).json(ingredients);
-    })
-    .catch((err) => {
-      console.error(err);
-    })
-    .finally(() => {
-      // knex.destroy();
-    })
+	let knex = require('../../knex.js');
+	let month = req.swagger.params.month.value;
+	knex('foods')
+	.where(month, true)
+	.then((ingredients) => {
+		res.status(200).json(ingredients);
+	})
+	.catch((err) => {
+		console.error(err);
+	})
+	.finally(() => {
+		// knex.destroy();
+	})
 }
 
 function getRecipes(req, res) {
@@ -46,9 +46,6 @@ function getRecipes(req, res) {
   let urlArray = [];
   let fullRecipes = [];
   let customRecipes = [];
-
-
-
   knex('foods')
     .where(month, true)
     .then((ingredients) => {
@@ -61,7 +58,6 @@ function getRecipes(req, res) {
         }
       })
     })
-
     .then(() =>{
       let url = `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ingredients='${seasonalIngredients}'`;
 
@@ -87,13 +83,11 @@ function getRecipes(req, res) {
 
       return Promise.all(recipePromises)
     })
-
     .then((results) => {
       results.forEach((element) => {
         fullRecipes.push(element);
       })
     })
-
     .then(() => {
       fullRecipes.forEach((element) => {
         if(element.instructions !== null) {
@@ -112,12 +106,10 @@ function getRecipes(req, res) {
         }
       })
     })
-
     .then(() => {
       console.log(customRecipes);
       res.send(customRecipes);
     })
-
     .catch((err) => {
       console.error(err);
     })
