@@ -1,25 +1,33 @@
 'use strict';
 
+const jwt = require('jsonwebtoken');
+
 function getFavorites(req, res) {
   let knex = require('../../knex.js');
-  knex('favorites')
-    .orderBy('user_id')
+  const token = req.headers['token'];
+  jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
+    knex('favorites')
+    .where('user_id', payload.userId)
+    .orderBy('id')
     .then((faves) => {
       res.status(200).json(faves);
     })
-  .catch((err) => {
-    console.error(err);
-  })
-  .finally(() => {
-    // knex.destroy();
-  })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      // knex.destroy();
+    })
+  });
 }
 
 function addFavorite(req, res) {
   let knex = require('../../knex.js');
-  knex('favorites')
+  const token = req.headers['token'];
+  jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
+    knex('favorites')
     .insert({
-      user_id: 1,
+      user_id: payload.userId,
       recipe_id: req.body.recipe_id,
       month: req.body.month
     }, '*')
@@ -32,12 +40,15 @@ function addFavorite(req, res) {
     .finally(() => {
       // knex.destroy();
     })
+  });
 }
 
 function getFavorite(req, res) {
   let knex = require('../../knex.js');
   let paramId = req.swagger.params.fave_id.value;
-  knex('favorites')
+  const token = req.headers['token'];
+  jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
+    knex('favorites')
     .where('id', paramId)
     .then((favorite) =>{
       res.status(200).json(favorite);
@@ -48,30 +59,34 @@ function getFavorite(req, res) {
     .finally(() => {
       // knex.destroy();
     })
+  });
 }
 
 function deleteFavorite(req, res) {
   let knex = require('../../knex.js');
   let paramId = req.swagger.params.fave_id.value;
   let faveToDelete;
-  knex('favorites')
+  const token = req.headers['token'];
+  jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
+    knex('favorites')
     .where('id', paramId)
     .then((favorites) => {
       faveToDelete = favorites;
     })
-  .then(() => {
-    return knex('favorites')
-    .del()
-    .where('id', paramId)
-  })
-  .then(() => {
-    res.send(faveToDelete)
-  })
-  .catch((err) => {
-    console.error(err);
-  })
-  .finally(() => {
-    // knex.destroy();
+    .then(() => {
+      return knex('favorites')
+      .del()
+      .where('id', paramId)
+    })
+    .then(() => {
+      res.send(faveToDelete)
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      // knex.destroy();
+    })
   })
 }
 
