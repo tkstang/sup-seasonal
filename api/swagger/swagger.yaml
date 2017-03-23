@@ -333,7 +333,7 @@ paths:
         "200":
           description: Favorite recipe by ID response
           schema:
-            $ref: "#/definitions/Favorite"
+            $ref: "#/definitions/Recipe"
         default:
           description: Error
           schema:

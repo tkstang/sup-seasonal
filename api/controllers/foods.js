@@ -18,7 +18,6 @@ function getAllFoods(req, res) {
 function getFood(req, res) {
     let knex = require('../../knex.js');
     let paramId = req.swagger.params.food_id.value;
-    console.log(paramId);
     knex('foods')
         .where('id', paramId)
         .then((food) => {

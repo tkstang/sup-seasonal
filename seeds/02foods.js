@@ -889,6 +889,516 @@ exports.seed = function(knex, Promise) {
         created_by: 1,
         nov: true,
         dec: true
+      },
+      {
+        food_name: 'almonds',
+        created_by: 1,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true
+      },
+      {
+        food_name: 'apples',
+        created_by: 1,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'apricots',
+        created_by: 1,
+        may: true,
+        jun: true,
+        jul: true
+      },
+      {
+        food_name: 'apriums',
+        created_by: 1,
+        may: true,
+        jun: true
+      },
+      {
+        food_name: 'asian Pears',
+        created_by: 1,
+        sep: true,
+        oct: true,
+        nov: true
+      },
+      {
+        food_name: 'avocados',
+        created_by: 1,
+        feb: true,
+        mar: true,
+        apr: true,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'blackberries',
+        created_by: 1,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true
+      },
+      {
+        food_name: 'blueberries',
+        created_by: 1,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true
+      },
+      {
+        food_name: 'boysenberries',
+        created_by: 1,
+        jun: true,
+        jul: true
+      },
+      {
+        food_name: 'cactus pear',
+        created_by: 1,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true
+      },
+      {
+        food_name: 'cherimoyas',
+        created_by: 1,
+        jan: true,
+        feb: true,
+        mar: true,
+        apr: true,
+        may: true,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'cherries',
+        created_by: 1,
+        apr: true,
+        may: true,
+        jun: true,
+        jul: true
+      },
+      {
+        food_name: 'chestunts',
+        created_by: 1,
+        sep: true
+      },
+      {
+        food_name: 'citron',
+        created_by: 1,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'dates',
+        created_by: 1,
+        aug: true,
+        sep: true,
+        oct: true
+      },
+      {
+        food_name: 'feijoas',
+        created_by: 1,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'figs',
+        created_by: 1,
+        jun: true,
+        jul: true,
+        sep: true,
+        oct: true
+      },
+      {
+        food_name: 'grapefruit',
+        created_by: 1,
+        jan: true,
+        feb: true,
+        mar: true,
+        apr: true,
+        dec: true
+      },
+      {
+        food_name: 'grapes',
+        created_by: 1,
+
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true
+      },
+      {
+        food_name: 'guavas',
+        created_by: 1,
+        feb: true,
+        mar: true,
+        apr: true
+      },
+      {
+        food_name: 'jujubes',
+        created_by: 1,
+        sep: true,
+        oct: true
+      },
+      {
+        food_name: 'kiwi',
+        created_by: 1,
+        sep: true,
+        oct: true,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'kumquats',
+        created_by: 1,
+        jan: true,
+        feb: true,
+        mar: true,
+        apr: true
+      },
+      {
+        food_name: 'lemons',
+        created_by: 1,
+        jan: true,
+        feb: true,
+        mar: true,
+        apr: true,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'limes',
+        created_by: 1,
+        jan: true,
+        feb: true,
+        mar: true,
+        apr: true,
+        oct: true,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'loganberries',
+        created_by: 1,
+        jun: true,
+        jul: true
+      },
+      {
+        food_name: 'loquats',
+        created_by: 1,
+        may: true,
+        jun: true
+      },
+      {
+        food_name: 'mandarins',
+        created_by: 1,
+        jan: true,
+        feb: true,
+        mar: true,
+        apr: true,
+        may: true
+      },
+      {
+        food_name: 'melons',
+        created_by: 1,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true
+      },
+      {
+        food_name: 'mulberries',
+        created_by: 1,
+        jul: true,
+        aug: true,
+      },
+      {
+        food_name: 'nectarines',
+        created_by: 1,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true
+      },
+      {
+        food_name: 'olives',
+        created_by: 1,
+        jan: true,
+        sep: true,
+        oct: true,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'oranges',
+        created_by: 1,
+        jan: true,
+        feb: true,
+        mar: true,
+        apr: true,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'peaches',
+        created_by: 1,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true
+      },
+      {
+        food_name: 'peacotum',
+        created_by: 1,
+        jul: true,
+        aug: true
+      },
+      {
+        food_name: 'peanuts',
+        created_by: 1,
+        jul: true,
+        aug: true
+      },
+      {
+        food_name: 'pears',
+        created_by: 1,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true
+      },
+      {
+        food_name: 'pecans',
+        created_by: 1,
+        jan: true,
+        feb: true,
+        mar: true,
+        apr: true,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'persimmons',
+        created_by: 1,
+        sep: true,
+        oct: true,
+        nov: true
+      },
+      {
+        food_name: 'pistachios',
+        created_by: 1,
+        sep: true,
+        oct: true,
+        nov: true
+      },
+      {
+        food_name: 'plums',
+        created_by: 1,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true
+      },
+      {
+        food_name: 'pluots',
+        created_by: 1,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true
+      },
+      {
+        food_name: 'pomegranates',
+        created_by: 1,
+        sep: true,
+        oct: true,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'pomelos',
+        created_by: 1,
+        jan: true,
+        feb: true,
+        mar: true,
+        apr: true,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'quince',
+        created_by: 1,
+        sep: true,
+        oct: true,
+        nov: true
+      },
+      {
+        food_name: 'raspberries',
+        created_by: 1,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true
+      },
+      {
+        food_name: 'rhubarb',
+        created_by: 1,
+        apr: true,
+        may: true,
+        jun: true,
+        jul: true
+      },
+      {
+        food_name: 'strawberries',
+        created_by: 1,
+        mar: true,
+        apr: true,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true
+      },
+      {
+        food_name: 'tayberries',
+        created_by: 1,
+        jun: true,
+        jul: true,
+        aug: true
+      },
+      {
+        food_name: 'walnuts',
+        created_by: 1,
+        oct: true,
+      },
+      {
+        food_name: '',
+        created_by: 1,
+        jan: true,
+        feb: true,
+        mar: true,
+        apr: true,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'crab',
+        created_by: 1,
+        jan: true,
+        feb: true,
+        mar: true,
+        apr: true,
+        may: true,
+        jun: true,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'salmon',
+        created_by: 1,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true
+      },
+      {
+        food_name: 'sardines',
+        created_by: 1,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true
+      },
+      {
+        food_name: 'seabass',
+        created_by: 1,
+        apr: true,
+        may: true,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true
+      },
+      {
+        food_name: 'swordfish',
+        created_by: 1,
+        jan: true,
+        feb: true,
+        oct: true,
+        nov: true,
+        dec: true
+      },
+      {
+        food_name: 'tuna',
+        created_by: 1,
+        jun: true,
+        jul: true,
+        aug: true,
+        sep: true,
+        oct: true,
+        nov: true
       }
     ])
       .then(() => {

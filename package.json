@@ -9,6 +9,7 @@
   "main": "app.js",
   "dependencies": {
     "bcrypt": "^1.0.2",
+    "bcrypt-as-promised": "^1.1.0",
     "body-parser": "^1.17.1",
     "express": "^4.12.3",
     "express-validation": "^1.0.2",

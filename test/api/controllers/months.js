@@ -15,7 +15,6 @@ beforeEach(done => {
   .then(() => {
     Promise.all([
       knex('users').insert({
-  			// id:	1,
   			username: 'juicedonjuice',
   			email:	'juiced@gmail.com',
   			permissions: 'user',
@@ -28,12 +27,11 @@ beforeEach(done => {
   .then(() => {
     Promise.all([
       knex('foods').insert([{
-  			food_name: 'tulips',
+  			food_name: 'turnips',
   			created_by: 1,
         created_at: "2017-03-19T22:30:11.400Z",
         updated_at: "2017-03-19T22:30:11.400Z",
-        // id: 1,
-  			mar: true,
+        jan: true,
   			apr: true,
   			may: true,
   			jun: true,
@@ -43,7 +41,7 @@ beforeEach(done => {
   			dec: true
   	   },
        {
-      food_name: 'roses',
+      food_name: 'carrots',
       created_by: 1,
       created_at: "2017-03-19T22:30:11.400Z",
       updated_at: "2017-03-19T22:30:11.400Z",
@@ -58,11 +56,10 @@ beforeEach(done => {
       dec: true
       },
       {
-      food_name: 'daisies',
+      food_name: 'barley',
       created_by: 1,
       created_at: "2017-03-19T22:30:11.400Z",
       updated_at: "2017-03-19T22:30:11.400Z",
-      // id: 3,
       mar: true,
       apr: true,
       may: true,
@@ -94,3 +91,75 @@ afterEach(done => {
 after(() => {
 	knex.destroy()
 })
+
+describe('GET /months/{month}', () => {
+  it('responds with JSON', done => {
+    request(app)
+      .get('/months/mar')
+      .expect('Content-Type', /json/)
+      .expect(200, done);
+  });
+  it('returns all foods in season in param month', done => {
+    request(app)
+      .get('/months/mar')
+      .expect(200, [
+        {
+       food_name: 'carrots',
+       created_by: 1,
+       created_at: "2017-03-19T22:30:11.400Z",
+       updated_at: "2017-03-19T22:30:11.400Z",
+       id: 2,
+       jan: false,
+       feb: false,
+       mar: true,
+       apr: true,
+       may: true,
+       jun: true,
+       jul: false,
+       aug: false,
+       sep: true,
+       oct: true,
+       nov: true,
+       dec: true
+       },
+       {
+       food_name: 'barley',
+       created_by: 1,
+       created_at: "2017-03-19T22:30:11.400Z",
+       updated_at: "2017-03-19T22:30:11.400Z",
+       id: 3,
+       jan: false,
+       feb: false,
+       mar: true,
+       apr: true,
+       may: true,
+       jun: true,
+       jul: false,
+       aug: false,
+       sep: true,
+       oct: true,
+       nov: true,
+       dec: true
+       }
+     ], done);
+  });
+
+});
+
+describe('GET /months/{month}/recipes', () => {
+  it('responds with JSON', done => {
+    request(app)
+      .get('/months/nov/recipes')
+      .expect('Content-Type', /json/)
+      .expect(200, done);
+  });
+  it('returns a list of recipes', done => {
+    request(app)
+      .get('/months/nov/recipes')
+      .end((err, res) => {
+        expect(res.body).to.be.a(array);
+        expect(res.body[0]).to.have.all.keys('insructions', 'id');
+      })
+    done();
+  })
+});
