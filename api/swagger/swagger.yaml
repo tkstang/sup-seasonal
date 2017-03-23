@@ -575,6 +575,7 @@ definitions:
       - username
       - email
       - permissions
+      - token
     properties:
       id:
         type: integer
@@ -583,6 +584,8 @@ definitions:
       email:
         type: string
       permissions:
+        type: string
+      token:
         type: string
   ErrorResponse:
     required:

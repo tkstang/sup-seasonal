@@ -15,10 +15,21 @@ function userRegistration(req, res){
     })
     .then(result => {
       const newUser = result[0];
-      delete newUser.hashed_password;
-      delete newUser.created_at;
-      delete newUser.updated_at;
-      res.status(200).json(newUser);
+			const claim = {
+				userId: newUser.id,
+				permissions: newUser.permissions
+			 };
+			const userToken = jwt.sign(claim, process.env.JWT_KEY, {
+				expiresIn: '7 days',
+			});
+			const loggedInUser = {
+				id: newUser.id,
+				username:	newUser.username,
+				email:	newUser.email,
+				permissions:	newUser.permissions,
+				token:	userToken
+			}
+      res.status(200).json(loggedInUser);
     })
     .catch((err) => {
       let errMessage = err.detail.slice(4).replace(/[{()}]/g, '').replace(/[=]/g, ' ');

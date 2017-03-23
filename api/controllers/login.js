@@ -23,7 +23,10 @@ function userLogin(req, res){
 		.where('email', req.body.email)
 		.then(result => {
 			const user = result[0];
-			const claim = { userId: user.id };
+			const claim = {
+				userId: user.id,
+				permissions: user.permissions
+			 };
 			const userToken = jwt.sign(claim, process.env.JWT_KEY, {
 				expiresIn: '7 days',
 			});
