@@ -205,25 +205,6 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-    post:
-      description: Adds a new user to the list of registered users.
-      operationId: addUser
-      parameters:
-        - name: user
-          in: body
-          description: The user to add.
-          required: true
-          schema:
-            $ref: "#/definitions/User"
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "#/definitions/User"
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
   /users/{user_id}:
     x-swagger-router-controller: users
     get:
@@ -282,6 +263,48 @@ paths:
       responses:
         "204":
           description: User deleted
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/login:
+    x-swagger-router-controller: login
+    post:
+      description: Allows a user to log in and receive a token.
+      operationId: userLogin
+      parameters:
+        - name: credentials
+          in: body
+          description: The user's credentials for log in
+          required: true
+          schema:
+            $ref: "#/definitions/Credentials"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Authenticated"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/register:
+    x-swagger-router-controller: register
+    post:
+      description: Allows a new user to provide information to register a new account.
+      operationId: userRegistration
+      parameters:
+        - name: user info
+          in: body
+          description: The user's information to register a new account
+          required: true
+          schema:
+            $ref: "#/definitions/Registration"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Authenticated"
         default:
           description: Error
           schema:
@@ -378,48 +401,6 @@ paths:
       responses:
         "204":
           description: Favorite deleted
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-  /login:
-    x-swagger-router-controller: login
-    post:
-      description: Allows a user to log in and receive a token.
-      operationId: userLogin
-      parameters:
-        - name: credentials
-          in: body
-          description: The user's credentials for log in
-          required: true
-          schema:
-            $ref: "#/definitions/Credentials"
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "#/definitions/Authenticated"
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-  /register:
-    x-swagger-router-controller: register
-    post:
-      description: Allows a new user to provide information to register a new account.
-      operationId: userRegistration
-      parameters:
-        - name: user info
-          in: body
-          description: The user's information to register a new account
-          required: true
-          schema:
-            $ref: "#/definitions/Registration"
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "#/definitions/Authenticated"
         default:
           description: Error
           schema:
