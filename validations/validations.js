@@ -74,3 +74,10 @@ module.exports.favoritesPost = {
       .max(3)
     }
 }
+
+module.exports.checkValError = function checkValidationError(err, req, res, next){
+  if (err instanceof ev.ValidationError) {
+    return res.status(err.status).json(errIsolate.message(err));
+  }
+  next();
+}

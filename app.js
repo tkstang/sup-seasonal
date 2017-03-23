@@ -35,42 +35,27 @@ function checkValidationError(err, req, res, next){
   next();
 }
 
-app.use('/favorites', function(err, req, res, next){
-  auth.verify(err, req, res, next);
-})
+app.use('/favorites', auth.verify);
 
-// app.post('/users', ev(validations.usersPost), function(err, req, res, next) {
-//   checkValidationError(err, req, res, next);
-// });
+app.post('/users/login', ev(validations.usersLogin));
 
-//add usersLogin to validation
-app.post('/users/login', ev(validations.usersLogin), function(err, req, res, next) {
-  checkValidationError(err, req, res, next);
-});
+app.post('/users/register', ev(validations.usersRegister));
 
 
+app.put('/users/register', ev(validations.usersRegister));
 
-app.put('/users', ev(validations.usersRegister), function(err, req, res, next) {
-  checkValidationError(err, req, res, next);
-});
-
-app.post('/foods', ev(validations.foodsPost), function(err, req, res, next) {
-  checkValidationError(err, req, res, next);
-});
-
-app.put('/foods', ev(validations.foodsPost), function(err, req, res, next) {
-  checkValidationError(err, req, res, next);
-});
-
-// app.post('/favorites', ev(validations.favoritesPost), function(err, req, res, next) {
-//   checkValidationError(err, req, res, next);
-// });
-
-app.put('/favorites', ev(validations.favoritesPost), function(err, req, res, next) {
-  checkValidationError(err, req, res, next);
-});
+app.post('/foods', ev(validations.foodsPost));
 
 
+app.put('/foods', ev(validations.foodsPost));
+
+
+app.post('/favorites', ev(validations.favoritesPost));
+
+
+app.put('/favorites', ev(validations.favoritesPost));
+
+app.use('/', validations.checkValError);
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
