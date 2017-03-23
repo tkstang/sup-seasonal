@@ -45,17 +45,11 @@ module.exports.foodsPost = {
 
 module.exports.favoritesPost = {
   body: {
-    user_id: Joi.number()
-      .integer()
-      .min(1)
-      .required(),
     recipe_id: Joi.number()
       .integer()
       .min(1)
       .required(),
-    permissions: Joi.string()
-      .min(3)
-      .max(10)
-      .required()
+    month: Joi.string()
+      .max(3)
     }
 }

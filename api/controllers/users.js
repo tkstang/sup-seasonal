@@ -129,7 +129,7 @@ function deleteUser(req, res) {
 module.exports = {
   getAllUsers: getAllUsers,
   getUser:  getUser,
-  addUser:  addUser,
+  // addUser:  addUser,
   updateUser: updateUser,
   deleteUser: deleteUser
 }
