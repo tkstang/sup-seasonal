@@ -23,19 +23,19 @@ function getRecipeJson(url) {
 }
 
 function getMonth(req, res) {
-  let knex = require('../../knex.js');
-  let month = req.swagger.params.month.value;
-  knex('foods')
-    .where(month, true)
-    .then((ingredients) => {
-      res.status(200).json(ingredients);
-    })
-    .catch((err) => {
-      console.error(err);
-    })
-    .finally(() => {
-      // knex.destroy();
-    })
+	let knex = require('../../knex.js');
+	let month = req.swagger.params.month.value;
+	knex('foods')
+	.where(month, true)
+	.then((ingredients) => {
+		res.status(200).json(ingredients);
+	})
+	.catch((err) => {
+		console.error(err);
+	})
+	.finally(() => {
+		// knex.destroy();
+	})
 }
 
 function getRecipes(req, res) {
