@@ -419,7 +419,7 @@ paths:
         "200":
           description: Account registration response
           schema:
-            $ref: "#/definitions/RegisteredUser"
+            $ref: "#/definitions/Authenticated"
         default:
           description: Error
           schema:
@@ -565,21 +565,6 @@ definitions:
       password:
         type: string
       username:
-        type: string
-  RegisteredUser:
-    required:
-      - id
-      - username
-      - email
-      - permissions
-    properties:
-      id:
-        type: integer
-      username:
-        type: string
-      email:
-        type: string
-      permissions:
         type: string
   ErrorResponse:
     required:
