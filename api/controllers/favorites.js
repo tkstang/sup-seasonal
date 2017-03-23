@@ -1,6 +1,26 @@
 'use strict';
 
 const jwt = require('jsonwebtoken');
+const fetch = require('node-fetch');
+fetch.Promise = require('bluebird');
+
+function getRecipeJson(url) {
+  return   fetch(url, {
+      method: 'get',
+      headers: {
+        'x-Mashape-Key': 'yyYYCMfoelmshn9iLWJzawTgalGTp1sEI5ejsnYwhNrq3f48S8'
+      }
+    })
+    .then(function(res) {
+      return res.json();
+    })
+    .then(function(jsonresult) {
+      return jsonresult;
+    })
+    .catch(function(error) {
+      console.error(error);
+    });
+}
 
 function getFavorites(req, res) {
   let knex = require('../../knex.js');
@@ -49,9 +69,30 @@ function getFavorite(req, res) {
   const token = req.headers['token'];
   jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
     knex('favorites')
+  let url;
+  let goodRecipe;
+  knex('favorites')
     .where('id', paramId)
     .then((favorite) =>{
-      res.status(200).json(favorite);
+      let recipeId = favorite[0].recipe_id;
+      url = `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/479101/information`
+      return getRecipeJson(url);
+    })
+    .then((result) => {
+      goodRecipe = [{
+        id: result.id,
+        servings: result.servings,
+        sourceURL: result.sourceURL,
+        title: result.title,
+        readyInMinutes: result.readyInMinutes,
+        image: result.image,
+        imageType: result.imageType,
+        extendedIngredients: result.extendedIngredients,
+        instructions: result.instructions
+      }]
+      console.log(goodRecipe);
+      res.send(goodRecipe);
+
     })
     .catch((err) => {
       console.error(err);

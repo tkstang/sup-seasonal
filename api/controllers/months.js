@@ -3,6 +3,7 @@
 const fetch = require('node-fetch');
 fetch.Promise = require('bluebird');
 
+//Helper function to get recipe information using fetch
 function getRecipeJson(url) {
   return   fetch(url, {
       method: 'get',
@@ -39,12 +40,13 @@ function getMonth(req, res) {
 
 function getRecipes(req, res) {
   let knex = require('../../knex.js');
-  let recipeIds = [];
-  let fullRecipes = [];
-  let goodRecipes = [];
   let seasonalIngredients = '';
   let month = req.swagger.params.month.value;
+  let recipeIds = [];
   let urlArray = [];
+  let fullRecipes = [];
+  let customRecipes = [];
+
 
 
   knex('foods')
@@ -79,11 +81,9 @@ function getRecipes(req, res) {
       for (var i = 0; i < recipeIds.length; i++) {
         let url = `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${recipeIds[i]}/information`
         urlArray.push(url);
-        // console.log(urlArray);
       }
 
       let recipePromises = urlArray.map(url => getRecipeJson(url));
-      // console.log(recipePromises);
 
       return Promise.all(recipePromises)
     })
@@ -93,7 +93,6 @@ function getRecipes(req, res) {
         fullRecipes.push(element);
       })
     })
-
 
     .then(() => {
       fullRecipes.forEach((element) => {
@@ -109,16 +108,14 @@ function getRecipes(req, res) {
             extendedIngredients: element.extendedIngredients,
             instructions: element.instructions
           }
-          goodRecipes.push(shortenedRecipe);
+          customRecipes.push(shortenedRecipe);
         }
       })
     })
 
     .then(() => {
-      console.log(goodRecipes);
-      res.send(goodRecipes);
-
-      // console.log(seasonalIngredients);
+      console.log(customRecipes);
+      res.send(customRecipes);
     })
 
     .catch((err) => {
