@@ -26,6 +26,7 @@ function getFavorites(req, res) {
   let knex = require('../../knex.js');
   const token = req.headers['token'];
   jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
+    console.log(payload);
     knex('favorites')
     .where('user_id', payload.userId)
     .orderBy('id')

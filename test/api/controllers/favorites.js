@@ -20,47 +20,34 @@ beforeEach(done => {
   knex.migrate.latest()
   .then(() => {
     Promise.all([
-      knex('users').insert({
-        username: 'juicedonjuice',
-        email:	'juiced@gmail.com',
-        permissions: 'user',
-        hashed_password: 'blah',
-        created_at:	'2017-03-19 18:22:58.526251-07',
-        updated_at:	'2017-03-19 18:22:58.526251-07'
-      },
-      {
-        username: 'gorillabiscuitoucher',
-        email:	'gstoucher@gmail.com',
-        permissions: 'user',
-        hashed_password: 'blah',
-        created_at:	'2017-03-20 18:22:58.526251-07',
-        updated_at:	'2017-03-20 18:22:58.526251-07'
-      },
-      {
-        username: 'garbagejoe',
-        email:	'garbage@joe.com',
-        permissions: 'user',
-        hashed_password: 'blah',
-        created_at:	'2017-03-19 18:22:58.526251-07',
-        updated_at:	'2017-03-19 18:22:58.526251-07'
-      },
-      {
-        username: 'bonjovi',
-        email: 'bon@jovi.com',
-        permissions: 'user',
-        hashed_password: 'bleargh',
-        created_at: '2017-03-20 18:22:58.526251-07',
-        updated_at: '2017-03-20 18:22:58.526251-07'
-      },
-      {
-        username: 'gorillatoucher',
-        email:	'gtoucher@gmail.com',
-        permissions: 'user',
-        hashed_password: '$2a$04$sctloqVkbs3AJHwS6scm1OfNrbV76o9.vwmMQNtMB5EpAlMIXJpp.',
-        created_at:	'2017-03-23 09:01:21.062782-07',
-        updated_at:	'2017-03-23 09:01:21.062782-07'
-      })
-    ])
+			knex('users').insert({
+				id:	1,
+				username: 'juicedonjuice',
+				email:	'juiced@gmail.com',
+				permissions: 'user',
+				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
+				created_at:	'2017-03-20T01:22:54.526Z',
+				updated_at:	'2017-03-20T01:22:54.526Z'
+			}),
+			knex('users').insert({
+				id:	2,
+				username: 'fruity4life',
+				email:	'fruity4life@gmail.com',
+				permissions: 'user',
+				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
+				created_at:	'2017-03-20T01:22:56.526Z',
+				updated_at:	'2017-03-20T01:22:56.526Z'
+			}),
+			knex('users').insert({
+				id:	3,
+				username: 'tommytomato',
+				email:	'tommytomato@gmail.com',
+				permissions: 'user',
+				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
+				created_at:	'2017-03-20T01:22:58.526Z',
+				updated_at:	'2017-03-20T01:22:58.526Z'
+			})
+		])
 
   })
   .then(() => {
@@ -210,7 +197,7 @@ describe('GET /favorites', () => {
   });
 });
 
-describe('GET /favorites:id', () => {
+xdescribe('GET /favorites:id', () => {
   it('responds with JSON', done => {
     request(app)
     .get('/favorites/2')
@@ -289,7 +276,7 @@ describe('POST /favorites', () => {
   //   done();
   // })
 
-  it.only('responds with JSON', done => {
+  it('responds with JSON', done => {
     request(app)
     .post('/favorites')
     .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInBlcm1pc3Npb25zIjoidXNlciIsImlhdCI6MTQ5MDI5NDQ3MiwiZXhwIjoxNDkwODk5MjcyfQ.FTtt0lNXBcQ36NKhITlHhsS0B_0XwfMIHl-kQcYoJx0')
