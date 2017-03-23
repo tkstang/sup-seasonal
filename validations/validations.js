@@ -69,6 +69,8 @@ module.exports.favoritesPost = {
     permissions: Joi.string()
     .min(3)
     .max(10)
-    .required()
-  }
+    .required(),
+    month: Joi.string()
+      .max(3)
+    }
 }

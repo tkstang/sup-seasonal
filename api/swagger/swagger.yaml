@@ -478,12 +478,9 @@ definitions:
           $ref: "#/definitions/Favorite"
   Favorite:
     required:
-      - user_id
       - recipe_id
       - month
     properties:
-      user_id:
-        type: integer
       recipe_id:
         type: integer
       month:
