@@ -1,33 +1,69 @@
 const Joi = require('joi');
 
-module.exports.usersPost = {
+// Remove if removing usersPost
+// module.exports.usersPost = {
+//   body: {
+//     username: Joi.string()
+//     .label('username')
+//     .alphanum()
+//     .max(20)
+//     .required(),
+//     email: Joi.string()
+//     .label('e-mail')
+//     .email()
+//     .max(30)
+//     .required(),
+//     permissions: Joi.string()
+//     .label('permissions')
+//     .max(12),
+//     hashed_password: Joi.string()
+//     .label('hashed password')
+//     .max(20)
+//     .required()
+//   }
+// }
+
+module.exports.usersRegister = {
   body: {
     username: Joi.string()
-      .label('username')
-      .alphanum()
-      .max(20)
-      .required(),
+    .label('username')
+    .alphanum()
+    .max(20)
+    .required(),
     email: Joi.string()
-      .label('e-mail')
-      .email()
-      .max(30)
-      .required(),
-    permissions: Joi.string()
-      .label('permissions')
-      .max(12),
-    hashed_password: Joi.string()
-      .label('hashed password')
-      .max(20)
-      .required()
-    }
+    .label('e-mail')
+    .email()
+    .max(30)
+    .required(),
+    password: Joi.string()
+    .label('password')
+    .max(20)
+    .min(8)
+    .required()
+  }
+}
+
+module.exports.usersLogin = {
+  body: {
+    email: Joi.string()
+    .label('e-mail')
+    .email()
+    .max(30)
+    .required(),
+    password: Joi.string()
+    .label('password')
+    .max(20)
+    .min(8)
+    .required()
+  }
 }
 
 module.exports.foodsPost = {
   body: {
     food_name: Joi.string()
-      .alphanum()
-      .max(40)
-      .required(),
+    .alphanum()
+    .max(40)
+    .required(),
     jan: Joi.boolean(),
     feb: Joi.boolean(),
     mar: Joi.boolean(),
@@ -46,16 +82,16 @@ module.exports.foodsPost = {
 module.exports.favoritesPost = {
   body: {
     user_id: Joi.number()
-      .integer()
-      .min(1)
-      .required(),
+    .integer()
+    .min(1)
+    .required(),
     recipe_id: Joi.number()
-      .integer()
-      .min(1)
-      .required(),
+    .integer()
+    .min(1)
+    .required(),
     permissions: Joi.string()
-      .min(3)
-      .max(10)
-      .required()
-    }
+    .min(3)
+    .max(10)
+    .required()
+  }
 }

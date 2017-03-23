@@ -15,7 +15,7 @@ dotenv.load();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: true
+  extended: true
 }));
 
 if (process.env.NODE_ENV !== 'production') {
@@ -39,7 +39,16 @@ app.use('/favorites', function(err, req, res, next){
   auth.verify(err, req, res, next);
 })
 
-app.post('/users', ev(validations.usersPost), function(err, req, res, next) {
+// app.post('/users', ev(validations.usersPost), function(err, req, res, next) {
+//   checkValidationError(err, req, res, next);
+// });
+
+//add usersLogin to validation
+app.post('/users/login', ev(validations.usersLogin), function(err, req, res, next) {
+  checkValidationError(err, req, res, next);
+});
+
+app.post('/users/register', ev(validations.usersRegister), function(err, req, res, next) {
   checkValidationError(err, req, res, next);
 });
 
