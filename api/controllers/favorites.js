@@ -41,11 +41,16 @@ function getFavorites(req, res) {
   });
 }
 
+
+
 function addFavorite(req, res) {
+  console.log('test');
   let knex = require('../../knex.js');
   const token = req.headers['token'];
   jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
+
     knex('favorites')
+
     .insert({
       user_id: payload.userId,
       recipe_id: req.body.recipe_id,
@@ -113,18 +118,25 @@ function deleteFavorite(req, res) {
     .where('id', paramId)
     .then((favorites) => {
       faveToDelete = favorites;
+      if(favorites[0].user_id !== payload.userId) {
+        console.log('yoyoyoyoyoy');
+        res.status(401).json('This Favorite Belongs To Another User');
+      }
+      else {
+
+          return knex('favorites')
+          .del()
+          .where('id', paramId)
+
+        .then(() => {
+          res.send(faveToDelete)
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+      }
     })
-    .then(() => {
-      return knex('favorites')
-      .del()
-      .where('id', paramId)
-    })
-    .then(() => {
-      res.send(faveToDelete)
-    })
-    .catch((err) => {
-      console.error(err);
-    })
+
     .finally(() => {
       // knex.destroy();
     })
