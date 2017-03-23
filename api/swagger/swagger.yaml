@@ -46,6 +46,12 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/Food"
+        - name: token
+          in: header
+          description: User token
+          required: true
+          type: string
+          format: string
       responses:
         "200":
           description: Added food response
@@ -91,6 +97,12 @@ paths:
           required: true
           schema:
             $ref: "#/definitions/Food"
+        - name: token
+          in: header
+          description: User token
+          required: true
+          type: string
+          format: string
       responses:
         "200":
           description: Updated food response
@@ -110,6 +122,12 @@ paths:
           description: ID of food to delete
           required: true
           type: integer
+        - name: token
+          in: header
+          description: User token
+          required: true
+          type: string
+          format: string
       responses:
         "204":
           description: Food deleted
