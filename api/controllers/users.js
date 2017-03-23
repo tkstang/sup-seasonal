@@ -51,48 +51,21 @@ function getUser(req, res) {
 function updateUser(req, res) {
   let knex = require('../../knex.js');
   let paramId = req.swagger.params.user_id.value;
-  const token = req.headers['token'];
-  jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
-    if (payload.userId !== paramId){
-      res.status(401).json('Unauthorized: The ID you are attempting to update belongs to another user');
-    } else {
+  if (req.body.userId !== paramId){
+    res.status(401).json('Unauthorized: The ID you are attempting to update belongs to another user');
+  } else {
+    knex('users')
+    .del()
+    .where('id', paramId)
+    .then(() => {
       knex('users')
-      .del()
-      .where('id', paramId)
-      .then(() => {
-        knex('users')
-        .insert({
-          id: paramId,
-          username: req.body.username,
-          email: req.body.email,
-          permissions: req.body.permissions,
-          hashed_password: req.body.hashed_password
-        }, '*')
-        .then((user) => {
-          res.send(user[0]);
-        })
-        .catch((err) => {
-          console.error(err);
-        })
-        .finally(() => {
-          // knex.destroy();
-        });
-      });
-    };
-  });
-}
-
-function deleteUser(req, res) {
-  let knex = require('../../knex.js');
-  let paramId = req.swagger.params.user_id.value;
-  const token = req.headers['token'];
-  jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
-    if (payload.userId !== paramId){
-      res.status(401).json('Unauthorized: The ID you are attempting to delete belongs to another user');
-    } else {
-      knex('users')
-      .del()
-      .where('id', paramId)
+      .insert({
+        id: paramId,
+        username: req.body.username,
+        email: req.body.email,
+        permissions: req.body.permissions,
+        hashed_password: req.body.hashed_password
+      }, '*')
       .then((user) => {
         res.send(user[0]);
       })
@@ -102,8 +75,29 @@ function deleteUser(req, res) {
       .finally(() => {
         // knex.destroy();
       });
-    };
-  });
+    });
+  };
+}
+
+function deleteUser(req, res) {
+  let knex = require('../../knex.js');
+  let paramId = req.swagger.params.user_id.value;
+  if (req.body.userId !== paramId){
+    res.status(401).json('Unauthorized: The ID you are attempting to delete belongs to another user');
+  } else {
+    knex('users')
+    .del()
+    .where('id', paramId)
+    .then((user) => {
+      res.send(user[0]);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      // knex.destroy();
+    });
+  };
 }
 
 function userRegistration(req, res){

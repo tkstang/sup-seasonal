@@ -268,7 +268,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
   /users/login:
-    x-swagger-router-controller: login
+    x-swagger-router-controller: users
     post:
       description: Allows a user to log in and receive a token.
       operationId: userLogin
@@ -289,7 +289,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
   /users/register:
-    x-swagger-router-controller: register
+    x-swagger-router-controller: users
     post:
       description: Allows a new user to provide information to register a new account.
       operationId: userRegistration
