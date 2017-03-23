@@ -192,7 +192,6 @@ function userLogin(req, res){
 module.exports = {
   getAllUsers: getAllUsers,
   getUser:  getUser,
-  addUser:  addUser,
   updateUser: updateUser,
   deleteUser: deleteUser,
   userRegistration: userRegistration,
