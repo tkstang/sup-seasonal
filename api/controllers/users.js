@@ -31,25 +31,25 @@ function getUser(req, res) {
       })
 }
 
-function addUser(req, res) {
-	let knex = require('../../knex.js');
-	knex('users')
-		.insert({
-      username: req.body.username,
-      email: req.body.email,
-      permissions: req.body.permissions,
-      hashed_password: req.body.hashed_password
-		}, '*')
-		.then((user) => {
-			res.send(user[0]);
-		})
-		.catch((err) => {
-			console.error(err);
-		})
-		.finally(() => {
-			// knex.destroy();
-		})
-}
+// function addUser(req, res) {
+// 	let knex = require('../../knex.js');
+// 	knex('users')
+// 		.insert({
+//       username: req.body.username,
+//       email: req.body.email,
+//       permissions: req.body.permissions,
+//       hashed_password: req.body.hashed_password
+// 		}, '*')
+// 		.then((user) => {
+// 			res.send(user[0]);
+// 		})
+// 		.catch((err) => {
+// 			console.error(err);
+// 		})
+// 		.finally(() => {
+// 			// knex.destroy();
+// 		})
+// }
 
 function updateUser(req, res) {
 	let knex = require('../../knex.js');
@@ -98,7 +98,7 @@ function deleteUser(req, res) {
 module.exports = {
   getAllUsers: getAllUsers,
   getUser:  getUser,
-  addUser:  addUser,
+  // addUser:  addUser,
   updateUser: updateUser,
   deleteUser: deleteUser
 }
