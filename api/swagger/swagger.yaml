@@ -286,6 +286,48 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /users/login:
+    x-swagger-router-controller: login
+    post:
+      description: Allows a user to log in and receive a token.
+      operationId: userLogin
+      parameters:
+        - name: credentials
+          in: body
+          description: The user's credentials for log in
+          required: true
+          schema:
+            $ref: "#/definitions/Credentials"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Authenticated"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/register:
+    x-swagger-router-controller: register
+    post:
+      description: Allows a new user to provide information to register a new account.
+      operationId: userRegistration
+      parameters:
+        - name: user info
+          in: body
+          description: The user's information to register a new account
+          required: true
+          schema:
+            $ref: "#/definitions/Registration"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Authenticated"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /favorites:
     x-swagger-router-controller: favorites
     get:
@@ -378,48 +420,6 @@ paths:
       responses:
         "204":
           description: Favorite deleted
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-  /login:
-    x-swagger-router-controller: login
-    post:
-      description: Allows a user to log in and receive a token.
-      operationId: userLogin
-      parameters:
-        - name: credentials
-          in: body
-          description: The user's credentials for log in
-          required: true
-          schema:
-            $ref: "#/definitions/Credentials"
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "#/definitions/Authenticated"
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-  /register:
-    x-swagger-router-controller: register
-    post:
-      description: Allows a new user to provide information to register a new account.
-      operationId: userRegistration
-      parameters:
-        - name: user info
-          in: body
-          description: The user's information to register a new account
-          required: true
-          schema:
-            $ref: "#/definitions/Registration"
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "#/definitions/Authenticated"
         default:
           description: Error
           schema:
