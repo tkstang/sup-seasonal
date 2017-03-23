@@ -26,6 +26,7 @@ function getRecipeJson(url) {
 
 function getFavorites(req, res) {
   let knex = require('../../knex.js');
+
   knex('favorites')
   .where('user_id', req.body.userId)
   .orderBy('id')

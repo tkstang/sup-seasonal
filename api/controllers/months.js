@@ -107,7 +107,6 @@ function getRecipes(req, res) {
       })
     })
     .then(() => {
-      console.log(customRecipes);
       res.send(customRecipes);
     })
     .catch((err) => {
