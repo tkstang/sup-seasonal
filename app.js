@@ -41,13 +41,17 @@ app.post('/users/login', ev(validations.usersLogin));
 
 app.post('/users/register', ev(validations.usersRegister));
 
+
 app.put('/users/register', ev(validations.usersRegister));
 
 app.post('/foods', ev(validations.foodsPost));
 
+
 app.put('/foods', ev(validations.foodsPost));
 
+
 app.post('/favorites', ev(validations.favoritesPost));
+
 
 app.put('/favorites', ev(validations.favoritesPost));
 
