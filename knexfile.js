@@ -2,19 +2,19 @@
 
 module.exports = {
 
-  development: {
-    client: 'pg',
-    connection: 'postgres://localhost/sup_seasonal_dev'
+	development: {
+		client: 'pg',
+		connection: 'postgres://localhost/sup_seasonal_dev'
 
-  },
+	},
 
-  test: {
-    client: 'pg',
-    connection: 'postgres://localhost/sup_seasonal_test'
-  },
+	test: {
+		client: 'pg',
+		connection: 'postgres://localhost/sup_seasonal_test'
+	},
 
-  production: {
-    client: 'pg',
-    connection: process.env.DATABASE_URL
-  }
+	production: {
+		client: 'pg',
+		connection: process.env.DATABASE_URL
+	}
 };
