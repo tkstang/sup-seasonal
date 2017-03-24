@@ -171,26 +171,6 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /months/{month}/favorites:
-    x-swagger-router-controller: favorites
-    get:
-      description: Gets a list of user's favorited recipes for ingredients from a specific month.
-      operationId: getFavoritesByMonth
-      parameters:
-        - name: month
-          in: path
-          description: Month of the year
-          required: true
-          type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "#/definitions/FavoritesByMonthList"
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
   /users:
     x-swagger-router-controller: users
     get:
@@ -486,14 +466,6 @@ definitions:
       instructions:
         type: string
   FavoritesList:
-    required:
-      - favorites
-    properties:
-      favorites:
-        type: array
-        items:
-          $ref: "#/definitions/Favorite"
-  FavoritesByMonthList:
     required:
       - favorites
     properties:
