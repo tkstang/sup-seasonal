@@ -9,6 +9,7 @@ const ev = require('express-validation');
 const Joi = require('joi');
 const bcrypt = require('bcrypt-as-promised');
 const jwt = require('jsonwebtoken');
+const errIsolate = require('./validations/errIsolation.js');
 const validations = require('./validations/validations.js');
 const auth = require('./validations/token.js');
 const dotenv = require('dotenv')
@@ -34,34 +35,24 @@ var config = {
   appRoot: __dirname // required config
 };
 
-function checkValidationError(err, req, res, next){
-  if (err instanceof ev.ValidationError) {
-    return res.status(err.status).json(errIsolate.message(err));
-  }
-  next();
-}
 
-app.use('/favorites', auth.verify);
+app.use('/api/favorites', auth.verify);
 
-app.post('/users/login', ev(validations.usersLogin));
+app.post('/api/users/login', ev(validations.usersLogin));
 
-app.post('/users/register', ev(validations.usersRegister));
+app.post('/api/users/register', ev(validations.usersRegister));
 
+app.put('/api/users', ev(validations.usersRegister));
 
-app.put('/users/register', ev(validations.usersRegister));
+app.post('/api/foods', ev(validations.foodsPost));
 
-app.post('/foods', ev(validations.foodsPost));
+app.put('/api/foods', ev(validations.foodsPost));
 
+app.post('/api/favorites', ev(validations.favoritesPost));
 
-app.put('/foods', ev(validations.foodsPost));
+app.put('/api/favorites', ev(validations.favoritesPost));
 
-
-app.post('/favorites', ev(validations.favoritesPost));
-
-
-app.put('/favorites', ev(validations.favoritesPost));
-
-app.use('/', validations.checkValError);
+app.use('/api/', validations.checkValError);
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }

@@ -15,6 +15,7 @@ fetch.Promise = require('bluebird');
 
 let token = '';
 
+
 beforeEach(done => {
   knex.migrate.latest()
   .then(() => {
@@ -152,14 +153,14 @@ after(() => {
 })
 
 describe('GET /favorites', () => {
-  it('expects a token', done => {
+  it('creates a token', done => {
     let loginCred = {
 
       email: 'juiced@gmail.com',
       password: 'blahblahblah'
     }
     request(app)
-    .post('/users/login')
+    .post('/api/users/login')
     .send(loginCred)
     .end((err, res) => {
       expect(res.body.token)
@@ -169,17 +170,17 @@ describe('GET /favorites', () => {
   })
   it('responds with JSON', done => {
     request(app)
-    .get('/favorites')
+    .get('/api/favorites')
     .set('token', token)
     .expect('Content-Type', /json/)
     .expect(200, done);
   });
 });
 
-describe('GET /favorites:id', () => {
+describe('GET /api/favorites:id', () => {
   it('returns recipe related to fave recipeID', () => {
     request(app)
-    .get('favorites/2')
+    .get('/api/favorites/2')
     .expect('Content-Type', /json/)
     .expect(200, [ { id: 479101,
       servings: 4,
@@ -202,7 +203,7 @@ describe('GET /favorites:id', () => {
   })
 });
 
-describe('POST /favorites', () => {
+describe('POST /api/favorites', () => {
   const newFave = {
     recipe_id: 98765,
     month: 'mar'
@@ -238,7 +239,7 @@ describe('POST /favorites', () => {
 
   it('responds with JSON', done => {
     request(app)
-    .post('/favorites')
+    .post('/api/favorites')
     .set('token', token)
     .send(newFave)
     .expect('Content-Type', /json/)
@@ -246,7 +247,7 @@ describe('POST /favorites', () => {
   });
   it('stores the obj in req body into the database', done => {
     request(app)
-    .post('/favorites')
+    .post('/api/favorites')
     .set('token', token)
     .send(newFave)
     .end((err, res) => {
@@ -266,42 +267,42 @@ describe('POST /favorites', () => {
   });
   it('returns 400 error when req is missing month', done => {
     request(app)
-    .post('/foods')
+    .post('/api/foods')
     .send(noMonth)
     .expect('Content-Type', /json/)
     .expect(400, done);
   });
   it('returns 400 error when req is missing recipe_id', done => {
     request(app)
-    .post('/foods')
+    .post('/api/foods')
     .send(noRecipe)
     .expect('Content-Type', /json/)
     .expect(400, done);
   });
   it('returns 400 error when req is missing user_id', done => {
     request(app)
-    .post('/foods')
+    .post('/api/foods')
     .send(noUser)
     .expect('Content-Type', /json/)
     .expect(400, done);
   });
   it('returns 400 error when recipe_id is not a number', done => {
     request(app)
-    .post('/foods')
+    .post('/api/foods')
     .send(badRecipe)
     .expect('Content-Type', /json/)
     .expect(400, done);
   });
   it('returns 400 error when user_id is not a number', done => {
     request(app)
-    .post('/foods')
+    .post('/api/foods')
     .send(badUser)
     .expect('Content-Type', /json/)
     .expect(400, done);
   });
   it('returns 400 error when month is not a string', done => {
     request(app)
-    .post('/foods')
+    .post('/api/foods')
     .send(badMonth)
     .expect('Content-Type', /json/)
     .expect(400, done);
