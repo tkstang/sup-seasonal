@@ -7,8 +7,8 @@ exports.seed = function(knex, Promise) {
 					id: 1,
 					username:	'alex',
 					email:	'alexanderkrawiec@gmail.com',
-					permissions: 'super_user',
-					hashed_password:	'blah',
+					permissions: 'superuser',
+					hashed_password:	'$2a$04$PiRim70/c3wFHlqTMvdRj.ibrVI7ItOJDXPv/uvfdReB0prtQuUwi',
 					created_at:	'2017-03-18 18:22:58.526251-07',
 					updated_at:	'2017-03-18 18:22:58.526251-07'
       	},
@@ -16,8 +16,8 @@ exports.seed = function(knex, Promise) {
 					id: 2,
 					username:	'tom',
 					email:	'stang.tk@gmail.com',
-					permissions: 'super_user',
-					hashed_password:	'blah',
+					permissions: 'superuser',
+					hashed_password:	'$2a$04$PiRim70/c3wFHlqTMvdRj.ibrVI7ItOJDXPv/uvfdReB0prtQuUwi',
 					created_at:	'2017-03-18 18:22:58.526251-07',
 					updated_at:	'2017-03-18 18:22:58.526251-07'
 	      },
@@ -28,7 +28,7 @@ exports.seed = function(knex, Promise) {
 					permissions: 'user',
 					hashed_password:	'blah',
 					created_at:	'2017-03-18 18:22:58.526251-07',
-					updated_at:	'2017-03-18 18:22:58.526251-07'		
+					updated_at:	'2017-03-18 18:22:58.526251-07'
 	      }])
       .then(() => {
         return knex.raw("SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));");
