@@ -175,6 +175,11 @@ describe('GET /favorites', () => {
     .expect('Content-Type', /json/)
     .expect(200, done);
   });
+  it('responds with 401 when token is missing', done => {
+    request(app)
+    .get('/api/favorites')
+    .expect(401, done);
+  });
 });
 
 describe('GET /api/favorites:id', () => {
@@ -201,6 +206,11 @@ describe('GET /api/favorites:id', () => {
       [Object] ]
     }])
   })
+  it('responds with 401 when token is missing', done => {
+    request(app)
+    .get('/api/favorites/2')
+    .expect(401, done);
+  });
 });
 
 describe('POST /api/favorites', () => {
@@ -312,5 +322,11 @@ describe('POST /api/favorites', () => {
     .send(badMonth)
     .expect('Content-Type', /json/)
     .expect(400, done);
+  });
+  it('responds with 401 when token is missing', done => {
+    request(app)
+    .post('/api/favorites')
+    .send(newFave)
+    .expect(401, done);
   });
 });
