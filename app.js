@@ -7,7 +7,6 @@ const ev = require('express-validation');
 const Joi = require('joi');
 const bcrypt = require('bcrypt-as-promised');
 const jwt = require('jsonwebtoken');
-const errIsolate = require('./validations/errIsolation.js');
 const validations = require('./validations/validations.js');
 const auth = require('./validations/token.js');
 const dotenv = require('dotenv')

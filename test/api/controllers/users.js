@@ -12,16 +12,14 @@ beforeEach(done => {
 	.then(() => {
 		Promise.all([
 			knex('users').insert({
-				id:	1,
 				username: 'juicedonjuice',
 				email:	'juiced@gmail.com',
 				permissions: 'user',
-				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
+				hashed_password: '$2a$04$WKGRDLpVKDt7EMk0kB1kC.NItFuLP2Dkpd8lcM9AtRhBaKnPsUE2u',
 				created_at:	'2017-03-20T01:22:54.526Z',
 				updated_at:	'2017-03-20T01:22:54.526Z'
 			}),
 			knex('users').insert({
-				id:	2,
 				username: 'fruity4life',
 				email:	'fruity4life@gmail.com',
 				permissions: 'user',
@@ -30,10 +28,9 @@ beforeEach(done => {
 				updated_at:	'2017-03-20T01:22:56.526Z'
 			}),
 			knex('users').insert({
-				id:	3,
 				username: 'tommytomato',
 				email:	'tommytomato@gmail.com',
-				permissions: 'user',
+				permissions: 'superuser',
 				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
 				created_at:	'2017-03-20T01:22:58.526Z',
 				updated_at:	'2017-03-20T01:22:58.526Z'
@@ -59,7 +56,7 @@ after(() => {
 	knex.destroy()
 })
 
-describe('GET /users', () => {
+xdescribe('GET /users', () => {
   it('responds with JSON', done => {
     supertest
       .get('/users')
@@ -75,7 +72,7 @@ describe('GET /users', () => {
 				username: 'juicedonjuice',
 				email:	'juiced@gmail.com',
 				permissions: 'user',
-				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
+				hashed_password: '$2a$04$WKGRDLpVKDt7EMk0kB1kC.NItFuLP2Dkpd8lcM9AtRhBaKnPsUE2u',
 				created_at:	'2017-03-20T01:22:54.526Z',
 				updated_at:	'2017-03-20T01:22:54.526Z'
 			},{
@@ -90,7 +87,7 @@ describe('GET /users', () => {
 				id:	3,
 				username: 'tommytomato',
 				email:	'tommytomato@gmail.com',
-				permissions: 'user',
+				permissions: 'superuser',
 				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
 				created_at:	'2017-03-20T01:22:58.526Z',
 				updated_at:	'2017-03-20T01:22:58.526Z'
@@ -98,16 +95,35 @@ describe('GET /users', () => {
   });
 });
 
-describe('GET /users/2', () => {
+xdescribe('GET /users/3', () => {
+	let token = '';
+	let loginCred = {
+		password: 'passypass',
+		email:	'tommytomato@gmail.com'
+	}
+	it('expects a token', done => {
+    supertest
+    .post('/users/login')
+    .send(loginCred)
+    .end((err, res) => {
+      expect(res.body.token)
+			console.log(res.body);
+      token = res.body.token;
+			console.log(token);
+    })
+    done();
+  })
   it('responds with JSON', done => {
     supertest
-      .get('/users/2')
-      .expect('Content-Type', /json/)
-      .expect(200, done);
-  });
+    .get('/users/3')
+		.set('token', token)
+    .expect('Content-Type', /json/)
+    .expect(200, done);
+	});
   it('returns an array with a single user object when responding with JSON', done => {
     supertest
-      .get('/users/2')
+      .get('/users/3')
+			.set('token', token)
       .expect('Content-Type', /json/)
       .expect(200, [{
 				id:	2,
@@ -118,5 +134,87 @@ describe('GET /users/2', () => {
 				created_at:	'2017-03-20T01:22:56.526Z',
 				updated_at:	'2017-03-20T01:22:56.526Z'
 			}], done);
+  });
+});
+
+describe('POST /users/login', () => {
+	let token = '';
+	let loginCred = {
+		email: 'juiced@gmail.com',
+		password: 'blahblahblah'
+	}
+	it('creates a token', done => {
+    supertest
+    .post('/users/login')
+    .send(loginCred)
+    .end((err, res) => {
+      expect(res.body.token)
+      token = res.body.token;
+    })
+    done();
+  })
+	it('responds with JSON', done => {
+		supertest
+		.post('/users/login')
+		.send(loginCred)
+		.expect('Content-Type', /json/)
+		.expect(200, done);
+	})
+  it('returns an object with the logged in users information', done => {
+    supertest
+		.post('/users/login')
+		.send(loginCred)
+    .expect('Content-Type', /json/)
+    .expect(200, {
+			id:	1,
+			username: 'juicedonjuice',
+			email:	'juiced@gmail.com',
+			permissions: 'user',
+			token:	token
+		}, done);
+  });
+});
+
+describe('POST /users/register', () => {
+	let token = '';
+	let	existingEmail = {
+		email: 'juiced@gmail.com',
+		password: 'blahblahblah',
+		username: 'jumbojuice'
+	}
+	let newUser = {
+		email:	'hiyapapaya@gmail.com',
+		password: 'passypass',
+		username: 'yapapa'
+	}
+	it('creates a token', done => {
+    supertest
+    .post('/users/register')
+    .send(newUser)
+    .end((err, res) => {
+      expect(res.body.token)
+      token = res.body.token;
+    })
+    done();
+  })
+	it('responds with JSON', done => {
+		supertest
+		.post('/users/register')
+		.send(newUser)
+		.expect('Content-Type', /json/)
+		.expect(200, done);
+	})
+  it('returns an object with the registered user information', done => {
+    supertest
+		.post('/users/register')
+		.send(newUser)
+    .expect('Content-Type', /json/)
+    .expect(200, {
+			id:	4,
+			username: 'yapapa',
+			email:	'hiyapapaya@gmail.com',
+			permissions: 'user',
+			token:	token
+		}, done);
   });
 });

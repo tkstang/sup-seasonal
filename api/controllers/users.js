@@ -4,48 +4,42 @@ const bcrypt = require('bcrypt-as-promised');
 const jwt = require('jsonwebtoken');
 
 function getAllUsers(req, res, next) {
-  let knex = require('../../knex.js');
-  const token = req.headers['token'];
-  jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
-    if (payload.permissions !== "superuser"){
-      res.status(401).json('Unauthorized');
-    } else {
-      knex('users')
-      .orderBy('id')
-      .then((users) => {
-        res.status(200).json(users);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        // knex.destroy();
-      });
-    };
-  });
+let knex = require('../../knex.js');
+  if (req.body.permissions !== "superuser"){
+    res.status(401).json('Unauthorized');
+  } else {
+    knex('users')
+    .orderBy('id')
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      // knex.destroy();
+    });
+  };
 }
 
 function getUser(req, res) {
   let knex = require('../../knex.js');
   let paramId = req.swagger.params.user_id.value;
-  const token = req.headers['token'];
-  jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
-    if (payload.permissions !== "superuser"){
-      res.status(401).json('Unauthorized');
-    } else {
-      knex('users')
-      .where('id', paramId)
-      .then((user) => {
-        res.status(200).json(user);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        // knex.destroy();
-      });
-    };
-  });
+  if (req.body.permissions !== "superuser"){
+    res.status(401).json('Unauthorized');
+  } else {
+    knex('users')
+    .where('id', paramId)
+    .then((user) => {
+      res.status(200).json(user);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      // knex.destroy();
+    });
+  };
 }
 
 function updateUser(req, res) {
