@@ -43,17 +43,17 @@ app.post('/api/login', ev(validations.usersLogin));
 
 app.post('/api/register', ev(validations.usersRegister));
 
-app.put('/api/users', ev(validations.usersRegister));
+app.put('/api/users/:user_id', ev(validations.usersRegister));
 
 app.post('/api/foods', auth.verify, ev(validations.foodsPost));
 
-app.put('/api/foods', auth.verify, ev(validations.foodsPost));
+app.put('/api/foods/:food_id', auth.verify, ev(validations.foodsPost));
 
-app.delete('/api/foods', auth.verify);
+app.delete('/api/foods/:food_id', auth.verify);
 
 app.post('/api/favorites', ev(validations.favoritesPost));
 
-app.put('/api/favorites', ev(validations.favoritesPost));
+app.put('/api/favorites/:fave_id', ev(validations.favoritesPost));
 
 app.use('/api/', validations.checkValError);
 
