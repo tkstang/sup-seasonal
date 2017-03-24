@@ -32,6 +32,6 @@
   "scripts": {
     "start": "node app.js",
     "test": "swagger project test",
-    "heroku-postbuild": "knex migrate:latest",
+    "heroku-postbuild": "knex migrate:latest"
   }
 }
