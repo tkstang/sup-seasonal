@@ -15,6 +15,7 @@ fetch.Promise = require('bluebird');
 
 let token = '';
 
+
 beforeEach(done => {
   knex.migrate.latest()
   .then(() => {
@@ -152,7 +153,7 @@ after(() => {
 })
 
 describe('GET /favorites', () => {
-  it('expects a token', done => {
+  it('creates a token', done => {
     let loginCred = {
 
       email: 'juiced@gmail.com',
