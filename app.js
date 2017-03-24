@@ -1,6 +1,8 @@
 'use strict';
 
 var SwaggerExpress = require('swagger-express-mw');
+const express = require('express');
+const path = require('path');
 var app = require('express')();
 const bodyParser = require('body-parser');
 const ev = require('express-validation');
@@ -10,7 +12,12 @@ const jwt = require('jsonwebtoken');
 const validations = require('./validations/validations.js');
 const auth = require('./validations/token.js');
 const dotenv = require('dotenv')
+const cors = require('cors');
 dotenv.load();
+
+app.use(cors());
+app.use(express.static(path.join('public')));
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
