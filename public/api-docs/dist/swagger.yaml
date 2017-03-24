@@ -3,9 +3,9 @@ info:
   version: "0.0.1"
   title: Sup Seasonal
 # during dev, should point to your local machine
-host: https://supseasonal.herokuapp.com
+host: supseasonal.herokuapp.com
 # basePath prefixes all resource paths
-basePath: /
+basePath: /api
 #
 schemes:
   # tip: remove http to make production-grade
@@ -16,7 +16,7 @@ consumes:
 produces:
   - application/json
 paths:
-  foods:
+  /foods:
     x-swagger-router-controller: foods
     get:
       consumes:
