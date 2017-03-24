@@ -11,7 +11,9 @@
     "bcrypt": "^1.0.2",
     "bcrypt-as-promised": "^1.1.0",
     "body-parser": "^1.17.1",
+    "cors": "^2.8.1",
     "dotenv": "^4.0.0",
+    "electron": "^1.6.2",
     "express": "^4.12.3",
     "express-validation": "^1.0.2",
     "joi": "^10.2.2",
@@ -29,6 +31,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "test": "swagger project test"
+    "test": "swagger project test",
+    "heroku-postbuild": "knex migrate:latest",
   }
 }
