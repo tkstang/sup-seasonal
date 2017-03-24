@@ -1,40 +1,44 @@
 'use strict';
 
+const jwt = require('jsonwebtoken');
+
 function getAllFoods(req, res) {
 	let knex = require('../../knex.js');
 	knex('foods')
-    .orderBy('food_name')
-    .then((foods) => {
-      res.status(200).json(foods);
-  })
-  .catch((err) => {
-    console.error(err);
-  })
+	.orderBy('food_name')
+	.then((foods) => {
+		res.status(200).json(foods);
+	})
+	.catch((err) => {
+		console.error(err);
+	})
 	.finally(() => {
 		// knex.destroy();
 	});
 }
 
 function getFood(req, res) {
-    let knex = require('../../knex.js');
-    let paramId = req.swagger.params.food_id.value;
-    console.log(paramId);
-    knex('foods')
-        .where('id', paramId)
-        .then((food) => {
-            res.status(200).json(food);
-        })
-        .catch((err) => {
-            console.error(err);
-        })
-        .finally(() => {
-            // knex.destroy();
-        })
+	let knex = require('../../knex.js');
+	let paramId = req.swagger.params.food_id.value;
+	knex('foods')
+	.where('id', paramId)
+	.then((food) => {
+		res.status(200).json(food);
+	})
+	.catch((err) => {
+		console.error(err);
+	})
+	.finally(() => {
+		// knex.destroy();
+	})
 }
 
 function addFood(req, res) {
 	let knex = require('../../knex.js');
-	knex('foods')
+	if (req.body.permissions !== "superuser"){
+		res.status(401).json('Unauthorized');
+	} else {
+		knex('foods')
 		.insert({
 			food_name: req.body.food_name,
 			created_by: 1,
@@ -59,17 +63,21 @@ function addFood(req, res) {
 		})
 		.finally(() => {
 			// knex.destroy();
-		})
+		});
+	};
 }
 
 function updateFood(req, res) {
-	let knex = require('../../knex.js');
-	let paramId = req.swagger.params.food_id.value;
-	knex('foods')
+let knex = require('../../knex.js');
+let paramId = req.swagger.params.food_id.value;
+	if (req.body.permissions !== "superuser"){
+		res.status(401).json('Unauthorized');
+	} else {
+		knex('foods')
 		.del()
 		.where('id', paramId)
 		.then(() => {
-			knex('foods')
+			return knex('foods')
 			.insert({
 				food_name: req.body.food_name,
 				id: paramId,
@@ -87,29 +95,33 @@ function updateFood(req, res) {
 				nov: req.body.nov,
 				dec: req.body.dec
 			}, '*')
-			.then((foods) => {
-				res.send(foods[0]);
-			})
+		})
+		.then((foods) => {
+			res.send(foods[0]);
 		})
 		.catch((err) => {
 			console.error(err);
 		})
 		.finally(() => {
 			// knex.destroy();
-		})
+		});
+	};
 }
 
 function deleteFood(req, res) {
 	let knex = require('../../knex.js');
 	let paramId = req.swagger.params.food_id.value;
 	let foodToDelete;
-	knex('foods')
+	if (req.body.permissions !== "superuser"){
+		res.status(401).json('Unauthorized');
+	} else {
+		knex('foods')
 		.where('id', paramId)
 		.then((foods) => {
 			foodToDelete = foods;
 		})
 		.then(() => {
-			return knex('foods')
+			knex('foods')
 			.del()
 			.where('id', paramId)
 		})
@@ -121,12 +133,13 @@ function deleteFood(req, res) {
 		})
 		.finally(() => {
 			// knex.destroy();
-		})
+		});
+	};
 }
 
 module.exports = {
-  getAllFoods: getAllFoods,
-  getFood: getFood,
+	getAllFoods: getAllFoods,
+	getFood: getFood,
 	addFood: addFood,
 	updateFood: updateFood,
 	deleteFood: deleteFood

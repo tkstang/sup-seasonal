@@ -202,7 +202,7 @@ describe('GET /foods:id', () => {
 });
 
 
-xdescribe('POST /foods', () => {
+describe('POST /foods', () => {
   const newFood = {
     food_name: 'sunflowers',
     mar: true,

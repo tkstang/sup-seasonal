@@ -15,7 +15,6 @@ beforeEach(done => {
   .then(() => {
     Promise.all([
       knex('users').insert({
-  			// id:	1,
   			username: 'juicedonjuice',
   			email:	'juiced@gmail.com',
   			permissions: 'user',
@@ -32,7 +31,6 @@ beforeEach(done => {
   			created_by: 1,
         created_at: "2017-03-19T22:30:11.400Z",
         updated_at: "2017-03-19T22:30:11.400Z",
-        // id: 1,
         jan: true,
   			apr: true,
   			may: true,
@@ -62,7 +60,6 @@ beforeEach(done => {
       created_by: 1,
       created_at: "2017-03-19T22:30:11.400Z",
       updated_at: "2017-03-19T22:30:11.400Z",
-      // id: 3,
       mar: true,
       apr: true,
       may: true,

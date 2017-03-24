@@ -5,12 +5,22 @@ var app = require('express')();
 const bodyParser = require('body-parser');
 const ev = require('express-validation');
 const Joi = require('joi');
-const errIsolate = require('./validations/errIsolation.js');
+const bcrypt = require('bcrypt-as-promised');
+const jwt = require('jsonwebtoken');
 const validations = require('./validations/validations.js');
+const auth = require('./validations/token.js');
+const dotenv = require('dotenv')
+dotenv.load();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: true
+  extended: true
 }));
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 module.exports = app; // for testing
 
 var config = {
@@ -24,31 +34,27 @@ function checkValidationError(err, req, res, next){
   next();
 }
 
-app.post('/users', ev(validations.usersPost), function(err, req, res, next) {
-  checkValidationError(err, req, res, next);
-});
+app.use('/favorites', auth.verify);
 
-app.put('/users', ev(validations.usersPost), function(err, req, res, next) {
-  checkValidationError(err, req, res, next);
-});
+app.post('/users/login', ev(validations.usersLogin));
 
-app.post('/foods', ev(validations.foodsPost), function(err, req, res, next) {
-  checkValidationError(err, req, res, next);
-});
-
-app.put('/foods', ev(validations.foodsPost), function(err, req, res, next) {
-  checkValidationError(err, req, res, next);
-});
-
-app.post('/favorites', ev(validations.favoritesPost), function(err, req, res, next) {
-  checkValidationError(err, req, res, next);
-});
-
-app.put('/favorites', ev(validations.favoritesPost), function(err, req, res, next) {
-  checkValidationError(err, req, res, next);
-});
+app.post('/users/register', ev(validations.usersRegister));
 
 
+app.put('/users/register', ev(validations.usersRegister));
+
+app.post('/foods', ev(validations.foodsPost));
+
+
+app.put('/foods', ev(validations.foodsPost));
+
+
+app.post('/favorites', ev(validations.favoritesPost));
+
+
+app.put('/favorites', ev(validations.favoritesPost));
+
+app.use('/', validations.checkValError);
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
