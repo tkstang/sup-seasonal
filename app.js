@@ -17,7 +17,7 @@ const cors = require('cors');
 dotenv.load();
 
 app.use(cors());
-app.use(express.static(path.join('public')));
+app.use(express.static(path.join('public/api-docs/dist')));
 
 
 app.use(bodyParser.json());
