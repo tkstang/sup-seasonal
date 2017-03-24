@@ -16,7 +16,7 @@ consumes:
 produces:
   - application/json
 paths:
-  /foods:
+  foods:
     x-swagger-router-controller: foods
     get:
       consumes:
