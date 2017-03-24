@@ -59,16 +59,21 @@ after(() => {
 	knex.destroy()
 })
 
-describe('GET /users', () => {
+describe('GET /api/users', () => {
+	let credentials = {
+		permissions: 'superuser',
+	}
   it('responds with JSON', done => {
     supertest
-      .get('/users')
+      .get('/api/users')
+			.send(credentials)
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
   it('returns an array of all user objects when responding with JSON', done => {
     supertest
-      .get('/users')
+      .get('/api/users')
+			.send(credentials)
       .expect('Content-Type', /json/)
       .expect(200, [{
 				id:	1,
@@ -98,16 +103,19 @@ describe('GET /users', () => {
   });
 });
 
-describe('GET /users/2', () => {
+xdescribe('GET /api/users/2', () => {
+
   it('responds with JSON', done => {
     supertest
-      .get('/users/2')
+      .get('api/users/2')
+			.send(credentials)
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
   it('returns an array with a single user object when responding with JSON', done => {
     supertest
-      .get('/users/2')
+      .get('api/users/2')
+			.send(credentials)
       .expect('Content-Type', /json/)
       .expect(200, [{
 				id:	2,

@@ -35,18 +35,21 @@ var config = {
   appRoot: __dirname // required config
 };
 
-
 app.use('/api/favorites', auth.verify);
 
-app.post('/api/users/login', ev(validations.usersLogin));
+app.use('/api/users', auth.verify);
 
-app.post('/api/users/register', ev(validations.usersRegister));
+app.post('/api/login', ev(validations.usersLogin));
+
+app.post('/api/register', ev(validations.usersRegister));
 
 app.put('/api/users', ev(validations.usersRegister));
 
-app.post('/api/foods', ev(validations.foodsPost));
+app.post('/api/foods', auth.verify, ev(validations.foodsPost));
 
-app.put('/api/foods', ev(validations.foodsPost));
+app.put('/api/foods', auth.verify, ev(validations.foodsPost));
+
+app.delete('/api/foods', auth.verify);
 
 app.post('/api/favorites', ev(validations.favoritesPost));
 
