@@ -36,23 +36,23 @@ var config = {
 };
 
 
-app.use('/favorites', auth.verify);
+app.use('/api/favorites', auth.verify);
 
-app.post('/users/login', ev(validations.usersLogin));
+app.post('/api/users/login', ev(validations.usersLogin));
 
-app.post('/users/register', ev(validations.usersRegister));
+app.post('/api/users/register', ev(validations.usersRegister));
 
-app.put('/users', ev(validations.usersRegister));
+app.put('/api/users', ev(validations.usersRegister));
 
-app.post('/foods', ev(validations.foodsPost));
+app.post('/api/foods', ev(validations.foodsPost));
 
-app.put('/foods', ev(validations.foodsPost));
+app.put('/api/foods', ev(validations.foodsPost));
 
-app.post('/favorites', ev(validations.favoritesPost));
+app.post('/api/favorites', ev(validations.favoritesPost));
 
-app.put('/favorites', ev(validations.favoritesPost));
+app.put('/api/favorites', ev(validations.favoritesPost));
 
-app.use('/', validations.checkValError);
+app.use('/api/', validations.checkValError);
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
