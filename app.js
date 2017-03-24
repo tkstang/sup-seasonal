@@ -9,6 +9,7 @@ const ev = require('express-validation');
 const Joi = require('joi');
 const bcrypt = require('bcrypt-as-promised');
 const jwt = require('jsonwebtoken');
+const errIsolate = require('./validations/errIsolation.js');
 const validations = require('./validations/validations.js');
 const auth = require('./validations/token.js');
 const dotenv = require('dotenv')
@@ -16,7 +17,7 @@ const cors = require('cors');
 dotenv.load();
 
 app.use(cors());
-app.use(express.static(path.join('public/api-docs/dist')));
+app.use(express.static(path.join('public')));
 
 
 app.use(bodyParser.json());
