@@ -97,16 +97,16 @@ after(() => {
 })
 
 
-describe('GET /foods', () => {
+describe('GET api/foods', () => {
   it('responds with JSON', done => {
     request(app)
-      .get('/foods')
+      .get('/api/foods')
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
   it('returns a list of all foods in db', done => {
     request(app)
-      .get('/foods')
+      .get('/api/foods')
       .expect(200,[
         {
           food_name: 'daisies',
@@ -169,16 +169,16 @@ describe('GET /foods', () => {
   });
 });
 
-describe('GET /foods:id', () => {
+describe('GET /api/foods:id', () => {
   it('responds with JSON', done => {
     request(app)
-      .get('/foods/2')
+      .get('/api/foods/2')
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
   it('returns food corresponding to ID param', () => {
     request(app)
-      .get('/foods/2')
+      .get('/api/foods/2')
       .expect(200, {
         food_name: 'roses',
         created_by: 1,
@@ -227,14 +227,14 @@ describe('POST /foods', () => {
 
   it('responds with JSON', done => {
     request(app)
-      .post('/foods')
+      .post('/api/foods')
       .send(newFood)
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
   it('stores the passed obj into the db', done => {
     request(app)
-      .post('/foods')
+      .post('/api/foods')
       .send(newFood)
       .end((err, res) => {
 //deleting timestamps
@@ -264,14 +264,14 @@ describe('POST /foods', () => {
   });
   it('returns 400 error when req is missing food_name', done => {
     request(app)
-      .post('/foods')
+      .post('/api/foods')
       .send(badFood)
       .expect('Content-Type', /json/)
       .expect(400, done);
   });
   it('returns 400 error when food_name is not a string', done => {
     request(app)
-      .post('/foods')
+      .post('/api/foods')
       .send(badFoodName)
       .expect('Content-Type', /json/)
       .expect(400, done);
