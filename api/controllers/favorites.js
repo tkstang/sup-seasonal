@@ -73,7 +73,7 @@ function getFavorite(req, res) {
     .where('id', paramId)
     .then((favorite) =>{
       let recipeId = favorite[0].recipe_id;
-      url = `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/479101/information`
+      url = `https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/${recipeId}/information`
       return getRecipeJson(url);
     })
     .then((result) => {
@@ -88,7 +88,6 @@ function getFavorite(req, res) {
         extendedIngredients: result.extendedIngredients,
         instructions: result.instructions
       }]
-      console.log(goodRecipe);
       res.send(goodRecipe);
 
     })
