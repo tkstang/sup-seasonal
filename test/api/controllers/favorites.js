@@ -160,7 +160,7 @@ describe('GET /favorites', () => {
       password: 'blahblahblah'
     }
     request(app)
-    .post('/api/users/login')
+    .post('/api/login')
     .send(loginCred)
     .end((err, res) => {
       expect(res.body.token)
@@ -268,6 +268,7 @@ describe('POST /api/favorites', () => {
   it('returns 400 error when req is missing month', done => {
     request(app)
     .post('/api/foods')
+    .set('token', token)
     .send(noMonth)
     .expect('Content-Type', /json/)
     .expect(400, done);
@@ -275,6 +276,7 @@ describe('POST /api/favorites', () => {
   it('returns 400 error when req is missing recipe_id', done => {
     request(app)
     .post('/api/foods')
+    .set('token', token)
     .send(noRecipe)
     .expect('Content-Type', /json/)
     .expect(400, done);
@@ -282,6 +284,7 @@ describe('POST /api/favorites', () => {
   it('returns 400 error when req is missing user_id', done => {
     request(app)
     .post('/api/foods')
+    .set('token', token)
     .send(noUser)
     .expect('Content-Type', /json/)
     .expect(400, done);
@@ -289,6 +292,7 @@ describe('POST /api/favorites', () => {
   it('returns 400 error when recipe_id is not a number', done => {
     request(app)
     .post('/api/foods')
+    .set('token', token)
     .send(badRecipe)
     .expect('Content-Type', /json/)
     .expect(400, done);
@@ -296,6 +300,7 @@ describe('POST /api/favorites', () => {
   it('returns 400 error when user_id is not a number', done => {
     request(app)
     .post('/api/foods')
+    .set('token', token)
     .send(badUser)
     .expect('Content-Type', /json/)
     .expect(400, done);
@@ -303,6 +308,7 @@ describe('POST /api/favorites', () => {
   it('returns 400 error when month is not a string', done => {
     request(app)
     .post('/api/foods')
+    .set('token', token)
     .send(badMonth)
     .expect('Content-Type', /json/)
     .expect(400, done);
