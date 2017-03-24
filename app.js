@@ -43,21 +43,19 @@ function checkValidationError(err, req, res, next){
 
 app.use('/favorites', auth.verify);
 
-app.post('/users/login', ev(validations.usersLogin));
+app.use('/users', auth.verify);
 
-app.post('/users/register', ev(validations.usersRegister));
+app.post('/login', ev(validations.usersLogin));
 
+app.post('/register', ev(validations.usersRegister));
 
-app.put('/users/register', ev(validations.usersRegister));
+app.put('/users/updateUser', ev(validations.usersRegister));
 
 app.post('/foods', ev(validations.foodsPost));
 
-
 app.put('/foods', ev(validations.foodsPost));
 
-
 app.post('/favorites', ev(validations.favoritesPost));
-
 
 app.put('/favorites', ev(validations.favoritesPost));
 
