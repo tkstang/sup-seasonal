@@ -92,16 +92,16 @@ after(() => {
 	knex.destroy()
 })
 
-describe('GET /months/{month}', () => {
+describe('GET /api/months/{month}', () => {
   it('responds with JSON', done => {
     request(app)
-      .get('/months/mar')
+      .get('/api/months/mar')
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
   it('returns all foods in season in param month', done => {
     request(app)
-      .get('/months/mar')
+      .get('/api/months/mar')
       .expect(200, [
         {
        food_name: 'carrots',
@@ -146,16 +146,16 @@ describe('GET /months/{month}', () => {
 
 });
 
-describe('GET /months/{month}/recipes', () => {
+describe('GET /api/months/{month}/recipes', () => {
   it('responds with JSON', done => {
     request(app)
-      .get('/months/nov/recipes')
+      .get('/api/months/nov/recipes')
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
   it('returns a list of recipes', done => {
     request(app)
-      .get('/months/nov/recipes')
+      .get('/api/months/nov/recipes')
       .end((err, res) => {
         expect(res.body).to.be.a(array);
         expect(res.body[0]).to.have.all.keys('insructions', 'id');
