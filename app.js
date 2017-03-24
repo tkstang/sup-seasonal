@@ -35,12 +35,6 @@ var config = {
   appRoot: __dirname // required config
 };
 
-function checkValidationError(err, req, res, next){
-  if (err instanceof ev.ValidationError) {
-    return res.status(err.status).json(errIsolate.message(err));
-  }
-  next();
-}
 
 app.use('/favorites', auth.verify);
 
@@ -48,17 +42,13 @@ app.post('/users/login', ev(validations.usersLogin));
 
 app.post('/users/register', ev(validations.usersRegister));
 
-
-app.put('/users/register', ev(validations.usersRegister));
+app.put('/users', ev(validations.usersRegister));
 
 app.post('/foods', ev(validations.foodsPost));
 
-
 app.put('/foods', ev(validations.foodsPost));
 
-
 app.post('/favorites', ev(validations.favoritesPost));
-
 
 app.put('/favorites', ev(validations.favoritesPost));
 
