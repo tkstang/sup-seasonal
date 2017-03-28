@@ -6,6 +6,7 @@ const request = require('supertest');
 const expect = require('chai').expect;
 const app = require('../../../app');
 let knex = require('../../../knex');
+let token;
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -18,8 +19,8 @@ beforeEach(done => {
   			// id:	1,
   			username: 'juicedonjuice',
   			email:	'juiced@gmail.com',
-  			permissions: 'user',
-  			hashed_password: 'blah',
+  			permissions: 'superuser',
+  			hashed_password: '$2a$04$WKGRDLpVKDt7EMk0kB1kC.NItFuLP2Dkpd8lcM9AtRhBaKnPsUE2u',
   			created_at:	'2017-03-19 18:22:58.526251-07',
   			updated_at:	'2017-03-19 18:22:58.526251-07'
   		})
@@ -225,9 +226,25 @@ describe('POST /foods', () => {
     feb: true
   }
 
+  it('creates a token', done => {
+    let loginCred = {
+      email: 'juiced@gmail.com',
+      password: 'blahblahblah'
+    }
+    request(app)
+    .post('/api/login')
+    .send(loginCred)
+    .end((err, res) => {
+      expect(res.body.token)
+      token = res.body.token;
+    })
+    done();
+  })
+
   it('responds with JSON', done => {
     request(app)
       .post('/api/foods')
+      .set('token', token)
       .send(newFood)
       .expect('Content-Type', /json/)
       .expect(200, done);
@@ -235,6 +252,7 @@ describe('POST /foods', () => {
   it('stores the passed obj into the db', done => {
     request(app)
       .post('/api/foods')
+      .set('token', token)
       .send(newFood)
       .end((err, res) => {
 //deleting timestamps
@@ -265,6 +283,7 @@ describe('POST /foods', () => {
   it('returns 400 error when req is missing food_name', done => {
     request(app)
       .post('/api/foods')
+      .set('token', token)
       .send(badFood)
       .expect('Content-Type', /json/)
       .expect(400, done);
@@ -272,6 +291,7 @@ describe('POST /foods', () => {
   it('returns 400 error when food_name is not a string', done => {
     request(app)
       .post('/api/foods')
+      .set('token', token)
       .send(badFoodName)
       .expect('Content-Type', /json/)
       .expect(400, done);
