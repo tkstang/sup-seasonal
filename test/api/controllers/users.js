@@ -59,9 +59,9 @@ after(() => {
 	knex.destroy()
 })
 
-let token = '';
 
 describe('GET /api/users', () => {
+	let token = '';
 	let loginCred = {
 		email:	'tommytomato@gmail.com',
 		password: 'passypass'
@@ -69,12 +69,10 @@ describe('GET /api/users', () => {
 	it('requires a token', done => {
 		supertest
 		.post('/api/login')
-		.set('token', token)
+		.send(loginCred)
 		.end((err, res) => {
 			expect(res.body.token)
-			console.log(res.body.token);
 			token = res.body.token;
-			console.log(token);
 		})
 		done();
 	})
@@ -110,7 +108,7 @@ describe('GET /api/users', () => {
 				id:	3,
 				username: 'tommytomato',
 				email:	'tommytomato@gmail.com',
-				permissions: 'user',
+				permissions: 'superuser',
 				hashed_password: '$2a$04$sRsM4/1C4Gk3SC456Av9ZO0gby0yrj9uLpA5QIsgcZZFPt.qidBEy',
 				created_at:	'2017-03-20T01:22:58.526Z',
 				updated_at:	'2017-03-20T01:22:58.526Z'
@@ -118,19 +116,34 @@ describe('GET /api/users', () => {
   });
 });
 
-xdescribe('GET /api/users/2', () => {
-
+describe('GET /api/users/2', () => {
+	let token = '';
+	let loginCred = {
+		email:	'tommytomato@gmail.com',
+		password: 'passypass'
+	}
+	it('requires a token', done => {
+		supertest
+		.post('/api/login')
+		.send(loginCred)
+		.end((err, res) => {
+			expect(res.body.token)
+			token = res.body.token;
+		})
+		done();
+	})
   it('responds with JSON', done => {
+		console.log(`token: ${token}`);
     supertest
-      .get('api/users/2')
-			.send(credentials)
+      .get('/api/users/2')
+			.set('token', token)
       .expect('Content-Type', /json/)
       .expect(200, done);
   });
   it('returns an array with a single user object when responding with JSON', done => {
     supertest
-      .get('api/users/2')
-			.send(credentials)
+      .get('/api/users/2')
+			.set('token', token)
       .expect('Content-Type', /json/)
       .expect(200, [{
 				id:	2,
